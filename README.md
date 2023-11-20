@@ -7,6 +7,9 @@ Projeto para a escolinha de futebol estrelas do futuro com o objetivo de auxilia
 
 ## Testes
 
+## Deploy
+O deploy é feito pelo Railway (https://railway.app)
+
 ## Contribuição
   - [Fluxo de desenvolvimento](#fluxo-de-desenvolvimento)
     - [Frontend](#frontend)
