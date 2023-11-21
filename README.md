@@ -2,8 +2,15 @@
 Projeto para a escolinha de futebol estrelas do futuro com o objetivo de auxiliar no gerenciamento e cadastro dos alunos.
 
 ## Instalação
-
+1) Clone o projeto na sua máquina
+2) Execute o comando `npm install` dentro de client e server para instalar as dependências
+3) Crie um arquivo .env e substitua as variáveis de ambiente pelas strings de conexão. 
 ## Desenvolvimento
+  ### Front-end
+
+
+  ### Back-end
+  1) Execute `npm start` para iniciar o servidor de desenvolvimento.
 
 ## Testes
 
