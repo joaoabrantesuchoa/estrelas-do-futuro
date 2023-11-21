@@ -76,6 +76,8 @@ Header                             // diretório de componente
 
 Neste caso, o diretório `Header` representa um módulo, com o arquivo `index.tsx` exportando o componente `Header.tsx` como default, de modo que componentes fora do módulo tenham imports mais simples, como `import Header from '[...]/Header'`. Todo o código usado exclusivamente pelo componente de Header pode ficar dentro do diretório `Header`, como componentes e utilitários internos.
 
+A implementação dos componentes deve seguir a prototipação definida no [figma](https://www.figma.com/file/RLtOKu4GpQA4lPvkDFSxAh/Untitled?type=design&node-id=0%3A1&mode=design&t=bZRmxlFV1Zpc6gPU-1) do projeto.
+
 ## Dicas de desenvolvimento
 
 ### Branches
