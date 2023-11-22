@@ -1,14 +1,23 @@
-const express = require("express");
-
-const PORT = process.env.PORT || 3001;
+import express from "express";
+import { PORT, mongoDBURL } from "./config.js";
+import mongoose from "mongoose";
 
 const app = express();
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+app.get("/", (request, response) => {
+  console.log(request);
+  return response.status(200).send("OK");
 });
 
+app.listen(PORT, () => {
+  console.log(`App is listening to port: ${PORT}`);
+});
 
-const dotenv = require("dotenv")
-dotenv.config()
-
+mongoose
+  .connect(mongoDBURL)
+  .then(() => {
+    console.log("App is connected to database");
+  })
+  .catch((error) => {
+    console.log(error);
+  });
