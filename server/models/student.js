@@ -1,21 +1,5 @@
 import mongoose from "mongoose";
-
-const phoneValidator = [
-  validate({
-    validator: "matches",
-    arguments: /^\d{11}$/,
-    message: "Phone number must have 11 digits (Brazilian format)",
-  }),
-];
-
-const dateValidator = [
-  {
-    validator: function (value) {
-      return moment(value, "DD/MM/YYYY", true).isValid();
-    },
-    message: "Invalid date format for birthDate. Please use dd/mm/yyyy format.",
-  },
-];
+import moment from "moment";
 
 const studentSchema = new mongoose.Schema({
   name: {
@@ -24,22 +8,47 @@ const studentSchema = new mongoose.Schema({
   },
   birthDate: {
     type: String,
-    validate: dateValidator,
-    set: function (value) {
-      return moment(value, "DD/MM/YYYY").toDate();
+    required: true,
+    validate: {
+      validator: function (value) {
+        return moment(value, "DD/MM/YYYY", true).isValid();
+      },
+      message:
+        "Invalid date format for birthDate. Please use dd/mm/yyyy format.",
     },
   },
-  motherName: String,
-  fatherName: String,
+  motherName: {
+    type: String,
+    required: true,
+  },
+  fatherName: {
+    type: String,
+    required: true,
+  },
   phone: {
     type: String,
-    validate: phoneValidator,
+    required: true,
+    validate: {
+      validator: function (value) {
+        return /^\d{11}$/.test(value);
+      },
+      message: "Phone number must have 11 digits (Brazilian format)",
+    },
   },
   responsablePhone: {
     type: String,
-    validate: phoneValidator,
+    required: true,
+    validate: {
+      validator: function (value) {
+        return /^\d{11}$/.test(value);
+      },
+      message: "Phone number must have 11 digits (Brazilian format)",
+    },
   },
-  medicalObservations: String,
+  medicalObservations: {
+    type: String,
+    required: true,
+  },
 });
 
 const Student = mongoose.model("Student", studentSchema);
