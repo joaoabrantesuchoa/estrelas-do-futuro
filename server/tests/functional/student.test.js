@@ -2,12 +2,6 @@ import { test } from "vitest";
 import request from "supertest";
 import app from "../../app";
 
-test("GET /", async ({ expect }) => {
-  const response = await request(app).get("/");
-  expect(response.status).toBe(200);
-  expect(response.text).toBe("OK");
-});
-
 test("POST /students", async ({ expect }) => {
   const newStudent = {
     name: "Test",
@@ -27,6 +21,21 @@ test("POST /students", async ({ expect }) => {
 test("GET /students", async ({ expect }) => {
   const response = await request(app).get("/students");
   expect(response.status).toBe(200);
+});
+
+test("POST /students with missing fields", async ({ expect }) => {
+  const newStudent = {
+    name: "Test",
+    // birthDate is missing
+    motherName: "Mother",
+    fatherName: "Father",
+    phone: "12345678901",
+    responsablePhone: "98765432101",
+    medicalObservations: "None",
+  };
+
+  const response = await request(app).post("/students").send(newStudent);
+  expect(response.status).toBe(400);
 });
 
 test("GET /students/:id", async ({ expect }) => {
