@@ -7,7 +7,7 @@ Projeto para a escolinha de futebol estrelas do futuro com o objetivo de auxilia
 3) Crie um arquivo .env e substitua as variáveis de ambiente pelas strings de conexão. 
 ## Desenvolvimento
   ### Front-end
-  1) Execute `npm start` para iniciar o servidor e acessar o expo.
+  1) Execute `npx expo start` para iniciar o servidor e acessar o expo.
 
   ### Back-end
   1) Execute `npm run dev` para iniciar o servidor de desenvolvimento.
