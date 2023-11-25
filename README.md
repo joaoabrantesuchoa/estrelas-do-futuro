@@ -13,6 +13,7 @@ Projeto para a escolinha de futebol estrelas do futuro com o objetivo de auxilia
   1) Execute `npm run dev` para iniciar o servidor de desenvolvimento.
 
 ## Testes
+  1) Execute `npm run test` para rodar em server para rodar os testes do projeto.
 
 ## Deploy
 O deploy é feito pelo Railway (https://railway.app)
