@@ -11,6 +11,7 @@ test("POST /students", async ({ expect }) => {
     phone: "12345678901",
     responsablePhone: "98765432101",
     medicalObservations: "None",
+    position: "atacante",
   };
 
   const response = await request(app).post("/students").send(newStudent);
@@ -32,6 +33,7 @@ test("POST /students with missing fields", async ({ expect }) => {
     phone: "12345678901",
     responsablePhone: "98765432101",
     medicalObservations: "None",
+    position: "atacante",
   };
 
   const response = await request(app).post("/students").send(newStudent);
@@ -47,6 +49,7 @@ test("GET /students/:id", async ({ expect }) => {
     phone: "12345678901",
     responsablePhone: "98765432101",
     medicalObservations: "None",
+    position: "atacante",
   };
   const created = await request(app).post("/students").send(newStudent);
 
@@ -64,6 +67,7 @@ test("DELETE /students/:id", async ({ expect }) => {
     phone: "12345678901",
     responsablePhone: "98765432101",
     medicalObservations: "None",
+    position: "atacante",
   };
   const created = await request(app).post("/students").send(newStudent);
 
