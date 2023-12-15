@@ -13,6 +13,7 @@ router.post("/", async (req, res) => {
       phone,
       responsablePhone,
       medicalObservations,
+      position,
     } = req.body;
 
     if (
@@ -22,7 +23,8 @@ router.post("/", async (req, res) => {
       !fatherName ||
       !phone ||
       !responsablePhone ||
-      !medicalObservations
+      !medicalObservations ||
+      !position
     ) {
       return res.status(400).send({
         message:
@@ -38,6 +40,7 @@ router.post("/", async (req, res) => {
       phone,
       responsablePhone,
       medicalObservations,
+      position,
     });
 
     return res.status(201).send(newStudent);
