@@ -72,6 +72,12 @@ studentSchema.pre("save", function (next) {
   next();
 });
 
+studentSchema.methods.updateCategory = function () {
+  const birthDate = moment(this.birthDate, "DD/MM/YYYY");
+  const now = moment();
+  this.category = Math.floor(now.diff(birthDate, "years")) + 1;
+};
+
 const Student = mongoose.model("Student", studentSchema);
 
 export default Student;
