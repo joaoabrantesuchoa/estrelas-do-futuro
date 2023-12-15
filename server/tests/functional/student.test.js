@@ -1,7 +1,12 @@
-import { test } from "vitest";
+import { test, beforeAll } from "vitest";
 import request from "supertest";
 import sinon from "sinon";
+import Student from "../../models/student";
 import app from "../../app";
+
+beforeAll(async () => {
+  await Student.deleteMany();
+});
 
 test("POST /students", async ({ expect }) => {
   const newStudent = {
