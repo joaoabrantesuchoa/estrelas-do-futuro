@@ -52,11 +52,6 @@ test("POST /students with category calculation", async ({ expect }) => {
   expect(response.body.category).toBe(24);
 });
 
-test("GET /students", async ({ expect }) => {
-  const response = await request(app).get("/students");
-  expect(response.status).toBe(200);
-});
-
 test("POST /students with missing fields", async ({ expect }) => {
   const newStudent = {
     name: "Test",
@@ -71,6 +66,11 @@ test("POST /students with missing fields", async ({ expect }) => {
 
   const response = await request(app).post("/students").send(newStudent);
   expect(response.status).toBe(400);
+});
+
+test("GET /students", async ({ expect }) => {
+  const response = await request(app).get("/students");
+  expect(response.status).toBe(200);
 });
 
 test("GET /students/:id", async ({ expect }) => {
