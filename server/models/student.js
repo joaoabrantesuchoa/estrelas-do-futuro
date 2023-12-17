@@ -49,7 +49,34 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  position: {
+    type: String,
+    required: true,
+  },
+
+  category: {
+    type: Number,
+  },
 });
+
+studentSchema.virtual("age").get(function () {
+  const birthDate = moment(this.birthDate, "DD/MM/YYYY");
+  const now = moment();
+  return now.diff(birthDate, "years");
+});
+
+studentSchema.pre("save", function (next) {
+  this.category = Math.floor(this.age) + 1;
+
+  next();
+});
+
+studentSchema.methods.updateCategory = function () {
+  const birthDate = moment(this.birthDate, "DD/MM/YYYY");
+  const now = moment();
+  this.category = Math.floor(now.diff(birthDate, "years")) + 1;
+};
 
 const Student = mongoose.model("Student", studentSchema);
 
