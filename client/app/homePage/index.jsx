@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
 import { styles } from "./styles";
-import { textStyles } from "../../../styles/fonts";
-import HomePageImage from "../../../imgs/homePageBrasao.png";
+import { textStyles } from "../../styles/fonts";
+import HomePageImage from "../../imgs/homePageBrasao.png";
 
 function HomePage() {
   return (
@@ -13,7 +13,9 @@ function HomePage() {
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button}>
-          <Text style={textStyles.buttonText}>Lista de alunos</Text>
+          <Text href={"/listaCategoria"} style={textStyles.buttonText}>
+            Lista de alunos
+          </Text>
         </TouchableOpacity>
       </View>
       <View>
