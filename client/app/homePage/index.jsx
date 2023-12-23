@@ -13,7 +13,7 @@ function HomePage() {
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button}>
-          <Text href={"/listaCategoria"} style={textStyles.buttonText}>
+          <Text href={"/studentCategory"} style={textStyles.buttonText}>
             Lista de alunos
           </Text>
         </TouchableOpacity>
