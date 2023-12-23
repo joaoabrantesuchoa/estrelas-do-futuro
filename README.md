@@ -12,6 +12,9 @@ Projeto para a escolinha de futebol estrelas do futuro com o objetivo de auxilia
   ### Back-end
   1) Execute `npm run dev` para iniciar o servidor de desenvolvimento.
 
+  ### Projeto compleot
+  1) Para iniciar tanto o Front quanto o Back, execute `npm run dev` no diretório `estrelas-do-futuro`.
+
 ## Testes
   1) Execute `npm run test` para rodar em server para rodar os testes do projeto.
 
