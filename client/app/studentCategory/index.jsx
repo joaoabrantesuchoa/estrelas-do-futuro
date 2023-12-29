@@ -1,7 +1,7 @@
 import { View, Text, ImageBackground } from "react-native";
 import { styles } from "./styles";
 import Category from "./components/Category/index";
-import backArrow from "../../imgs/ArrowLeft.png";
+import BackArrow from '../components/backArrow'
 
 const categories = [
   { name: "Sub 5", number: '5' },
@@ -17,10 +17,7 @@ const categories = [
 function StudentCategory() {
   return (
     <View>
-      <View style={styles.backContainer}>
-        <ImageBackground href={"/homePage"} style={styles.backArrow} source={backArrow} />
-        <Text style={styles.text}>Voltar</Text>
-      </View>
+      <BackArrow navigation={'/homePage'} />
       <View style={styles.container}>
         <Text style={styles.bodyText}>Selecione uma categoria para listar os alunos</Text>
         {categories.map((category, index) => {
