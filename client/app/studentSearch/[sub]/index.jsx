@@ -1,43 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
-import axios from 'axios'
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, FlatList } from 'react-native';
+import { fetchStudents } from '../../../api';
+import { useLocalSearchParams } from 'expo-router';
+import BackArrow from '../../components/backArrow';
+import Button from '../../components/button';
+import { styles } from './styles'
+import InputTextField from '../../components/inputTextField';
+import StudentIcon from './components/studentIcon';
+
 
 function StudentList() {
-    const [estudantes, setEstudantes] = useState([]);
+    const { sub } = useLocalSearchParams();
+
+    const [studentsData, setStudentsData] = useState([]);
+
+    const fetchStudentsData = useCallback(async () => {
+        const data = await fetchStudents();
+        setStudentsData(data)
+    }, []);
+
 
     useEffect(() => {
-        const fetchEstudantes = async () => {
-            try {
-                const response = await axios.get('http://localhost:5555/students');
-                setEstudantes(response.data);
-            } catch (error) {
-                console.error('Erro ao buscar estudantes:', error);
-            }
-        };
-
-        fetchEstudantes();
-    }, []);
+        fetchStudentsData();
+    }, [fetchStudentsData]);
 
     const renderItem = ({ item }) => (
         <View>
-            <Text>{item.name}</Text>
-            <Text>{item.birthDate}</Text>
-            <Text>{item.motherName}</Text>
-            <Text>{item.fatherName}</Text>
-            <Text>{item.phone}</Text>
-            <Text>{item.responsablePhone}</Text>
-            <Text>{item.medicalObservations}</Text>
-            <Text>{item.position}</Text>
+            <StudentIcon studentName={item.name} studentId={item.id} studentImage={item.image} />
         </View>
     );
 
     return (
-        <View>
-            <FlatList
-                data={estudantes}
-                renderItem={renderItem}
-                keyExtractor={item => item._id}
-            />
+        <View >
+            <BackArrow navigation={'/studentCategory'} />
+
+            <View style={styles.mainContainer}>
+                <InputTextField placeholder={'Pesquise o aluno pelo nome'} />
+
+                <FlatList
+                    data={studentsData}
+                    renderItem={renderItem}
+                    keyExtractor={item => item._id}
+                />
+
+                <Button navigation={'/createStudent'} name={'Adicionar aluno'} />
+            </View>
+
         </View>
     );
 }
