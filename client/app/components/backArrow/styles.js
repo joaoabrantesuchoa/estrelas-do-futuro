@@ -2,10 +2,13 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   backContainer: {
-    flex: 1,
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
+  button: {
     flexDirection: "row",
-    alignItems: "left",
-    justifyContent: "flex-start",
+    alignItems: "center",
   },
   backArrow: {
     width: 30,
@@ -13,6 +16,5 @@ export const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    marginTop: 3,
   },
 });

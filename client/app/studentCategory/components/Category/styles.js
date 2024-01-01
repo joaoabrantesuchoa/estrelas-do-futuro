@@ -11,8 +11,8 @@ export const styles = StyleSheet.create({
     justifyContent: "center,",
   },
   button: {
-    width: 229,
-    height: 42,
+    width: 250,
+    height: 45,
     backgroundColor: "#DDDDDD",
     alignItems: "center",
     justifyContent: "center",
@@ -27,6 +27,6 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    marginBottom: 8,
+    marginBottom: 15,
   },
 });
