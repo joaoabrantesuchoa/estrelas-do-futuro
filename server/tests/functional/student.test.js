@@ -49,7 +49,7 @@ test("POST /students with category calculation", async ({ expect }) => {
   const response = await request(app).post("/students").send(newStudent);
   expect(response.status).toBe(201);
   expect(response.body.name).toBe(newStudent.name);
-  expect(response.body.category).toBe(24);
+  expect(response.body.category).toBe(25);
 });
 
 test("POST /students with missing fields", async ({ expect }) => {
@@ -109,7 +109,7 @@ test("DELETE /students/:id", async ({ expect }) => {
   expect(response.status).toBe(200);
 });
 
-test("Category updates as time passes", async ({ expect }) => {
+test("Student category updates as time passes", async ({ expect }) => {
   const newStudent = {
     name: "Test",
     birthDate: "01/01/2000", // A idade será 23
@@ -124,7 +124,7 @@ test("Category updates as time passes", async ({ expect }) => {
   const response = await request(app).post("/students").send(newStudent);
   expect(response.status).toBe(201);
   expect(response.body.name).toBe(newStudent.name);
-  expect(response.body.category).toBe(24);
+  expect(response.body.category).toBe(25);
 
   const studentId = response.body._id;
 
@@ -134,7 +134,63 @@ test("Category updates as time passes", async ({ expect }) => {
 
   const getResponse = await request(app).get(`/students/${studentId}`);
   expect(getResponse.status).toBe(200);
-  expect(getResponse.body.category).toBe(25);
+  expect(getResponse.body.category).toBe(26);
 
   clock.restore();
+});
+
+test("Get the students by category", async ({ expect }) => {
+  await Student.deleteMany();
+
+  const sub25Student = {
+    name: "sub 25 Student",
+    birthDate: "01/01/2000",
+    motherName: "Mother",
+    fatherName: "Father",
+    phone: "12345678901",
+    responsablePhone: "98765432101",
+    medicalObservations: "None",
+    position: "atacante",
+  };
+
+  const sub5Student = {
+    name: "sub 5 Student",
+    birthDate: "01/01/2019",
+    motherName: "Mother",
+    fatherName: "Father",
+    phone: "12345678901",
+    responsablePhone: "98765432101",
+    medicalObservations: "None",
+    position: "atacante",
+  };
+
+  let response = await request(app).post("/students").send(sub25Student);
+  expect(response.status).toBe(201);
+  expect(response.body.name).toBe(sub25Student.name);
+
+  response = await request(app).post("/students").send(sub5Student);
+  expect(response.status).toBe(201);
+  expect(response.body.name).toBe(sub5Student.name);
+
+  let studentSub = 25;
+  let getResponse = await request(app).get(`/students?category=${studentSub}`);
+  const student25Body = getResponse.body;
+
+  expect(student25Body.length).toBe(1);
+  expect(student25Body[0].name).toBe("sub 25 Student");
+  expect(student25Body[0].category).toBe(25);
+
+  studentSub = 6;
+  getResponse = await request(app).get(`/students?category=${studentSub}`);
+  expect(getResponse.status).toBe(200);
+  const student5Body = getResponse.body;
+
+  expect(student5Body.length).toBe(1);
+  expect(student5Body[0].name).toBe("sub 5 Student");
+  expect(student5Body[0].category).toBe(6);
+
+  getResponse = await request(app).get(`/students`);
+  expect(getResponse.status).toBe(200);
+
+  expect(getResponse.body.length).toBe(2);
 });
