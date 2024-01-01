@@ -15,7 +15,7 @@ function StudentList() {
     const [studentsData, setStudentsData] = useState([]);
 
     const fetchStudentsData = useCallback(async () => {
-        const data = await fetchStudents();
+        const data = await fetchStudents(sub);
         setStudentsData(data)
     }, []);
 
