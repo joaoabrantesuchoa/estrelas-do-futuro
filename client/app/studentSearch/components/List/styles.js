@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
     height: "46px",
     alignItems: "center",
     justifyContent: "flex",
+    borderRadius: 50,
   },
   container: {
     flex: 1,
@@ -13,19 +14,15 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   button: {
-    width: 229,
-    height: 42,
-    backgroundColor: "#DDDDDD",
+    width: "250px",
+    height: "46px",
+    backgroundColor: "#D9D9D9",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 15,
-    borderColor: "#000",
-    borderWidth: 1,
-    shadowColor: "#000",
+    borderRadius: 30,
+    margin: 10,
   },
-  circuloContainer: {
-    width: "54px",
-    height: "54px",
-    flexShrink: 0,
+  textContainer: {
+    backgroundColor: "#FFFFF",
   },
 });
