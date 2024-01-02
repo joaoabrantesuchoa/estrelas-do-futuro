@@ -4,17 +4,31 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
   },
   button: {
-    width: 229,
-    height: 42,
-    backgroundColor: "#DDDDDD",
+    width: "217px",
+    height: "42px",
+    backgroundColor: "#D9D9D9",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 15,
-    borderColor: "#000",
-    borderWidth: 1,
-    shadowColor: "#000",
+    borderRadius: 30,
+    margin: 10,
+  },
+  textContainer: {
+    backgroundColor: "#FFFFF",
+  },
+  backArrow: {
+    marginTop: -1,
+    width: 30,
+    height: 30,
+    flexDirection: "row",
+  },
+  text: {
+    flexDirection: "row",
+  },
+  listConteiner: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 });
