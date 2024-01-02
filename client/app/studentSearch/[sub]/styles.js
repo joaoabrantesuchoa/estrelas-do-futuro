@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-<<<<<<< HEAD
   container: {
     flex: 1,
     alignItems: "center",
@@ -31,7 +30,7 @@ export const styles = StyleSheet.create({
   listConteiner: {
     flexDirection: "row",
     alignItems: "center",
-=======
+  },
   mainContainer: {
     alignItems: "center",
     justifyContent: "center",
@@ -40,6 +39,5 @@ export const styles = StyleSheet.create({
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
->>>>>>> 2ac90d826f4873348381016dd85d9ba5d9a42b72
   },
 });

@@ -1,53 +1,73 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { View, FlatList } from 'react-native';
-import { fetchStudents } from '../../../api';
-import { useLocalSearchParams } from 'expo-router';
-import BackArrow from '../../components/backArrow';
-import Button from '../../components/button';
-import { styles } from './styles'
-import InputTextField from '../../components/inputTextField';
-import StudentIcon from './components/studentIcon';
+import React from "react";
+import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
+import { styles } from "./styles";
+import List from "../components/List/index";
+import Photo from "../components/Photo";
+import Search from "../components/Search";
+import backArrow from "../../../imgs/ArrowLeft.png";
 
+const alunos = [
+  { name: "Carol" },
+  { name: "Jubileu" },
+  { name: "Nick" },
+  { name: "agiota" },
+  { name: "sem nome" },
+];
 
 function StudentList() {
-    const { sub } = useLocalSearchParams();
+  const { sub } = useLocalSearchParams();
 
-    const [studentsData, setStudentsData] = useState([]);
+  const [studentsData, setStudentsData] = useState([]);
 
-    const fetchStudentsData = useCallback(async () => {
-        const data = await fetchStudents(sub);
-        setStudentsData(data)
-    }, []);
+  const fetchStudentsData = useCallback(async () => {
+    const data = await fetchStudents(sub);
+    setStudentsData(data);
+  }, []);
 
+  useEffect(() => {
+    fetchStudentsData();
+  }, [fetchStudentsData]);
 
-    useEffect(() => {
-        fetchStudentsData();
-    }, [fetchStudentsData]);
+  const renderItem = ({ item }) => (
+    <View>
+      <StudentIcon
+        studentName={item.name}
+        studentId={item.id}
+        studentImage={item.image}
+      />
+    </View>
+  );
 
-    const renderItem = ({ item }) => (
-        <View>
-            <StudentIcon studentName={item.name} studentId={item.id} studentImage={item.image} />
-        </View>
-    );
-
-    return (
-        <View >
-            <BackArrow navigation={'/studentCategory'} />
-
-            <View style={styles.mainContainer}>
-                <InputTextField placeholder={'Pesquise o aluno pelo nome'} />
-
-                <FlatList
-                    data={studentsData}
-                    renderItem={renderItem}
-                    keyExtractor={item => item._id}
-                />
-
-                <Button navigation={'/createStudent'} name={'Adicionar aluno'} />
+  return (
+    <View style={styles.container}>
+      <View style={styles.backContainer}>
+        <ImageBackground
+          href={"/studentCategory"}
+          style={styles.backArrow}
+          source={backArrow}
+        />
+        <Text style={styles.text}>Voltar</Text>
+      </View>
+      <View style={{ alignItems: "center" }}>
+        <Search></Search>
+      </View>
+      <View>
+        {alunos.map((aluno, index) => {
+          return (
+            <View key={index} style={styles.listConteiner}>
+              <Photo imagem={aluno.imagem} style={{ marginRight: 100 }} />
+              <List name={aluno.name} />
             </View>
-
-        </View>
-    );
+          );
+        })}
+      </View>
+      <View>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.textContainer}>Adicionar aluno</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
 }
 
 export default StudentList;
