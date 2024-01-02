@@ -52,7 +52,14 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const students = await Student.find();
+    let students;
+
+    if (req.query.category) {
+      const category = Number(req.query.category);
+      students = await Student.find({ category: category });
+    } else {
+      students = await Student.find();
+    }
     return res.status(200).send(students);
   } catch (error) {
     console.error(error.message);
