@@ -1,21 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, TextInput, FlatList } from "react-native";
 import { styles } from "./styles";
-
-const dados = [
-  { id: "1", nome: "Carol" },
-  { id: "2", nome: "Jubileu" },
-  { id: "3", nome: "Nick" },
-];
+import { useLocalSearchParams } from "expo-router";
+import { fetchStudents } from "../../../../api";
 
 export default function Search() {
+  const { sub } = useLocalSearchParams();
+
+  const [studentsData, setStudentsData] = useState([]);
+  const [dadosFiltrados, setDadosFiltrados] = useState([]);
   const [pesquisa, setPesquisa] = useState("");
-  const [dadosFiltrados, setDadosFiltrados] = useState(dados);
+
+  const fetchStudentsData = useCallback(async () => {
+    const data = await fetchStudents(sub);
+    setStudentsData(data);
+    setDadosFiltrados(data);
+  }, []);
+
+  useEffect(() => {
+    fetchStudentsData();
+  }, [fetchStudentsData]);
 
   const pesquisar = (texto) => {
     if (texto) {
-      const dadosPesquisados = dados.filter((item) => {
-        const itemDados = item.nome.toUpperCase();
+      const dadosPesquisados = studentsData.filter((item) => {
+        const itemDados = item.name.toUpperCase();
         const textoPesquisa = texto.toUpperCase();
 
         return itemDados.indexOf(textoPesquisa) > -1;
@@ -24,28 +33,28 @@ export default function Search() {
       setDadosFiltrados(dadosPesquisados);
       setPesquisa(texto);
     } else {
-      setDadosFiltrados(dados);
+      setDadosFiltrados(studentsData);
       setPesquisa(texto);
     }
   };
 
   return (
     <View>
-      <View style={styles.conteiner}>
-        <TextInput
-          style={styles.conteinerText}
-          value={pesquisa}
-          onChangeText={(texto) => pesquisar(texto)}
-          placeholder="Pesquise o aluno pelo nome"
+      <TextInput
+        style={styles.conteiner}
+        placeholderTextColor="#696969"
+        textAlign="center"
+        value={pesquisa}
+        onChangeText={(texto) => pesquisar(texto)}
+        placeholder="Pesquise o aluno pelo nome"
+      />
+      {pesquisa.length > 0 && (
+        <FlatList
+          data={dadosFiltrados}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <Text>{item.nome}</Text>}
         />
-        {pesquisa.length > 0 && (
-          <FlatList
-            data={dadosFiltrados}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => <Text>{item.nome}</Text>}
-          />
-        )}
-      </View>
+      )}
     </View>
   );
 }

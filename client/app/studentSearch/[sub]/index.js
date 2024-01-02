@@ -1,18 +1,19 @@
-import React from "react";
-import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ImageBackground,
+  FlatList,
+} from "react-native";
+import { fetchStudents } from "../../../api";
 import { styles } from "./styles";
 import List from "../components/List/index";
 import Photo from "../components/Photo";
 import Search from "../components/Search";
-import backArrow from "../../../imgs/ArrowLeft.png";
-
-const alunos = [
-  { name: "Carol" },
-  { name: "Jubileu" },
-  { name: "Nick" },
-  { name: "agiota" },
-  { name: "sem nome" },
-];
+import { useLocalSearchParams } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
+import BackArrow from "../../components/backArrow";
 
 function StudentList() {
   const { sub } = useLocalSearchParams();
@@ -30,43 +31,30 @@ function StudentList() {
 
   const renderItem = ({ item }) => (
     <View>
-      <StudentIcon
-        studentName={item.name}
-        studentId={item.id}
-        studentImage={item.image}
-      />
+      <Photo imagem={item.image} style={{ marginRight: 100 }} />
+      <List studentId={item.id} studentName={item.name} />
     </View>
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.backContainer}>
-        <ImageBackground
-          href={"/studentCategory"}
-          style={styles.backArrow}
-          source={backArrow}
-        />
-        <Text style={styles.text}>Voltar</Text>
-      </View>
+    <SafeAreaView style={styles.container}>
+      <BackArrow navigation={"/studentCategory"} />
       <View style={{ alignItems: "center" }}>
-        <Search></Search>
+        <Search />
       </View>
       <View>
-        {alunos.map((aluno, index) => {
-          return (
-            <View key={index} style={styles.listConteiner}>
-              <Photo imagem={aluno.imagem} style={{ marginRight: 100 }} />
-              <List name={aluno.name} />
-            </View>
-          );
-        })}
+        <FlatList
+          data={studentsData}
+          renderItem={renderItem}
+          keyExtractor={(item) => item._id}
+        />
       </View>
       <View>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.textContainer}>Adicionar aluno</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

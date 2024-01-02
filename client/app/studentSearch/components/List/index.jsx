@@ -1,13 +1,14 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { styles } from "./styles";
+import { View } from "react-native";
+import Button from "../../../components/button";
 
-function List({ id, name }) {
+function List({ studentId, studentName }) {
   return (
     <View>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.textContainer}>{name}</Text>
-      </TouchableOpacity>
+      <Button
+        name={`${studentName}`}
+        navigation={`/studentView/${studentId}`}
+      />
     </View>
   );
 }
