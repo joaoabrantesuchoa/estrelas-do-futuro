@@ -2,42 +2,32 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
+    alignContent: "center",
     justifyContent: "space-between",
   },
-  button: {
-    width: "217px",
-    height: "42px",
+  studentIconList: {
+    maxWidth: "auto",
+    maxHeight: "80%",
+    marginBottom: 10,
+  },
+  textInputContainer: {
+    alignItems: "center",
+    width: 324,
+    height: 36,
+    flexShrink: 0,
+    borderRadius: 10,
     backgroundColor: "#D9D9D9",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 30,
-    margin: 10,
-  },
-  textContainer: {
-    backgroundColor: "#FFF",
-  },
-  backArrow: {
-    marginTop: -1,
-    width: 30,
-    height: 30,
-    flexDirection: "row",
-  },
-  text: {
-    flexDirection: "row",
-  },
-  listConteiner: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  mainContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textInput: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    marginTop: 40,
+    color: "#000",
+    textAlign: "center",
+    fontSize: 15,
+    fontWeight: "100",
+    lineHeight: 16,
+    letterSpacing: -0.3,
   },
 });

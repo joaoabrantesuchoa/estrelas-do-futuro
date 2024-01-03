@@ -1,24 +1,27 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, TextInput, FlatList } from "react-native";
 import { fetchStudents } from "../../../api";
 import { styles } from "./styles";
 import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackArrow from "../../components/backArrow";
 import StudentIcon from "./components/studentIcon";
-import StudentSearch from "./components/studentSearch";
+import Button from "../../components/button";
 
 function StudentList() {
   const { sub } = useLocalSearchParams();
 
   const [studentsData, setStudentsData] = useState([]);
+  const [filteredStudentsData, setFilteredStudentsData] = useState([]);
 
   const fetchStudentsData = useCallback(async () => {
     const data = await fetchStudents(sub);
     setStudentsData(data);
+    setFilteredStudentsData(data);
   }, []);
 
   const filterStudents = (searchText) => {
+    console.log({ searchText });
     if (searchText === "") {
       setFilteredStudentsData(studentsData);
     } else {
@@ -34,33 +37,35 @@ function StudentList() {
     fetchStudentsData();
   }, [fetchStudentsData]);
 
-  const renderItem = ({ item }) => (
-    <View>
+  const renderItem = ({ item }) => {
+    return (
       <StudentIcon
         studentName={item.name}
         studentImage={item.photoUrl}
         studentId={item.id}
       />
-    </View>
-  );
+    );
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView>
       <BackArrow navigation={"/studentCategory"} />
-      <View style={{ alignItems: "center", marginBottom: 5 }}>
-        <StudentSearch onSearch={filterStudents} />
-      </View>
-      <View>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.textInputContainer}
+          placeholderTextColor="#696969"
+          textAlign="center"
+          onChangeText={(texto) => filterStudents(texto)}
+          placeholder="Pesquise o aluno pelo nome"
+        />
+
         <FlatList
-          data={studentsData}
+          style={styles.studentIconList}
+          data={filteredStudentsData}
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
         />
-      </View>
-      <View>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.textContainer}>Adicionar aluno</Text>
-        </TouchableOpacity>
+        <Button name={"Adicionar aluno"} navigation={"/student/create"} />
       </View>
     </SafeAreaView>
   );
