@@ -11,6 +11,7 @@ Projeto para a escolinha de futebol estrelas do futuro com o objetivo de auxilia
 
   ### Back-end
   1) Execute `npm run dev` para iniciar o servidor de desenvolvimento.
+  2) Execute `npm run seed` para realizar o seed do banco de dados.
 
   ### Projeto completo
   1) Para iniciar tanto o Front quanto o Back, execute `npm run dev` no diretório `estrelas-do-futuro`.
