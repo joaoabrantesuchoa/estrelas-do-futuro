@@ -1,19 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-  FlatList,
-} from "react-native";
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { fetchStudents } from "../../../api";
 import { styles } from "./styles";
-import List from "../components/List/index";
-import Photo from "../components/Photo";
-import Search from "../components/Search";
 import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackArrow from "../../components/backArrow";
+import StudentIcon from "./components/studentIcon";
+import StudentSearch from "./components/studentSearch";
 
 function StudentList() {
   const { sub } = useLocalSearchParams();
@@ -25,22 +18,37 @@ function StudentList() {
     setStudentsData(data);
   }, []);
 
+  const filterStudents = (searchText) => {
+    if (searchText === "") {
+      setFilteredStudentsData(studentsData);
+    } else {
+      setFilteredStudentsData(
+        studentsData.filter((student) =>
+          student.name.toLowerCase().includes(searchText.toLowerCase())
+        )
+      );
+    }
+  };
+
   useEffect(() => {
     fetchStudentsData();
   }, [fetchStudentsData]);
 
   const renderItem = ({ item }) => (
     <View>
-      <Photo imagem={item.image} style={{ marginRight: 100 }} />
-      <List studentId={item.id} studentName={item.name} />
+      <StudentIcon
+        studentName={item.name}
+        studentImage={item.photoUrl}
+        studentId={item.id}
+      />
     </View>
   );
 
   return (
     <SafeAreaView style={styles.container}>
       <BackArrow navigation={"/studentCategory"} />
-      <View style={{ alignItems: "center" }}>
-        <Search />
+      <View style={{ alignItems: "center", marginBottom: 5 }}>
+        <StudentSearch onSearch={filterStudents} />
       </View>
       <View>
         <FlatList

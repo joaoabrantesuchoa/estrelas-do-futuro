@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     margin: 10,
   },
   textContainer: {
-    backgroundColor: "#FFFFF",
+    backgroundColor: "#FFF",
   },
   backArrow: {
     marginTop: -1,

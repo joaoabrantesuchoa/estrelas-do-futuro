@@ -1,27 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, TextInput, FlatList } from "react-native";
 import { styles } from "./styles";
-import { useLocalSearchParams } from "expo-router";
-import { fetchStudents } from "../../../../api";
 
-export default function Search() {
-  const { sub } = useLocalSearchParams();
-
-  const [studentsData, setStudentsData] = useState([]);
-  const [dadosFiltrados, setDadosFiltrados] = useState([]);
+export default function StudentSearch({ studentsData }) {
   const [pesquisa, setPesquisa] = useState("");
+  const [dadosFiltrados, setDadosFiltrados] = useState(studentsData);
 
-  const fetchStudentsData = useCallback(async () => {
-    const data = await fetchStudents(sub);
-    setStudentsData(data);
-    setDadosFiltrados(data);
-  }, []);
-
-  useEffect(() => {
-    fetchStudentsData();
-  }, [fetchStudentsData]);
-
-  const pesquisar = (texto) => {
+  const search = (texto) => {
     if (texto) {
       const dadosPesquisados = studentsData.filter((item) => {
         const itemDados = item.name.toUpperCase();
@@ -41,11 +26,11 @@ export default function Search() {
   return (
     <View>
       <TextInput
-        style={styles.conteiner}
+        style={styles.container}
         placeholderTextColor="#696969"
         textAlign="center"
         value={pesquisa}
-        onChangeText={(texto) => pesquisar(texto)}
+        onChangeText={(texto) => search(texto)}
         placeholder="Pesquise o aluno pelo nome"
       />
       {pesquisa.length > 0 && (
