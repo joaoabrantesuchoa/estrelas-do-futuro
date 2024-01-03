@@ -1,5 +1,7 @@
 import { connectDB } from "../db.js";
 import Student from "../models/student.js";
+import request from "supertest";
+import app from "../app.js";
 
 async function seedStudents() {
   await connectDB();
@@ -120,7 +122,9 @@ async function seedStudents() {
   ];
 
   try {
-    await Student.insertMany(students);
+    students.map(async (student) => {
+      await request(app).post("/students").send(student);
+    });
     console.log("Students seeded successfully!");
   } catch (err) {
     console.error("Error seeding students:", err);
