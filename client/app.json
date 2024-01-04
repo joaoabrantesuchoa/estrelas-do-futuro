@@ -4,9 +4,12 @@
     "web": {
       "bundler": "metro"
     },
-    "plugins": [
-      "expo-router"
-    ],
+    "splash": {
+      "image": "./images/homePageBrasao.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+    "plugins": ["expo-router"],
     "name": "client",
     "slug": "estrelas-do-futuro",
     "extra": {

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { styles } from "./styles";
 import { textStyles } from "../../styles/fonts";
-import HomePageImage from "../../imgs/homePageBrasao.png";
+import HomePageImage from "../../images/homePageBrasao.png";
 import { useRouter } from "expo-router";
 
 const HomePage = () => {

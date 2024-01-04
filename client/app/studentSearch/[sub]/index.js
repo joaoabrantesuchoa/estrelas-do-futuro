@@ -21,7 +21,6 @@ function StudentList() {
   }, []);
 
   const filterStudents = (searchText) => {
-    console.log({ searchText });
     if (searchText === "") {
       setFilteredStudentsData(studentsData);
     } else {

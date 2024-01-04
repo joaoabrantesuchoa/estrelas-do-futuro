@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function fetchStudents(studentSub) {
   try {
-    let url = "https://estrelas-do-futuro-back-end.onrender.com/students";
+    let url = process.env.EXPO_PUBLIC_API_URL;
     if (studentSub !== "all") {
       url += `?category=${studentSub}`;
     }
