@@ -7,12 +7,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  return res.status(200).send("OK");
-});
-
 app.use("/students", studentRouter);
 
-connectDB();
+await connectDB();
 
 export default app;
