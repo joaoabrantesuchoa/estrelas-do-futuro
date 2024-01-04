@@ -8,6 +8,22 @@
       "expo-router"
     ],
     "name": "client",
-    "slug": "client"
+    "slug": "estrelas-do-futuro",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "899e6077-3d6b-405e-88cc-082b99fd17a8"
+      }
+    },
+    "owner": "joao.abrantesuchoa",
+    "android": {
+      "package": "com.joao.abrantesuchoa.estrelasdofuturo",
+      "versionCode": 1
+    },
+    "ios": {
+      "bundleIdentifier": "com.joao.abrantesuchoa.estrelasdofuturo"
+    }
   }
 }
