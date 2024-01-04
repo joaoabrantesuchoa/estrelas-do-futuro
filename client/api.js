@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function fetchStudents(studentSub) {
   try {
-    let url = "http://192.168.1.3:5555/students";
+    let url = "https://estrelas-do-futuro-back-end.onrender.com/students";
     if (studentSub !== "all") {
       url += `?category=${studentSub}`;
     }
