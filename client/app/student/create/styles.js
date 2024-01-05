@@ -1,9 +1,16 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  button: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+  container: {
+    alignItems: "center",
+  },
+  textContainer: {
+    textAlign: "left",
+    margin: 30,
+  },
+  buttonContainer: {
+    width: 229,
+    height: 42,
     backgroundColor: "#DDDDDD",
     alignItems: "center",
     justifyContent: "center",
@@ -18,7 +25,6 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    marginBottom: 10,
-    marginRight: 10,
+    marginBottom: 8,
   },
 });

@@ -3,7 +3,7 @@ import backArrow from "../../../images/ArrowLeft.png";
 import { styles } from "./styles";
 import { Image, Text, SafeAreaView, TouchableOpacity } from "react-native";
 
-function BackArrow({ navigation }) {
+function BackArrow() {
   const router = useRouter();
 
   return (
@@ -11,7 +11,7 @@ function BackArrow({ navigation }) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          router.replace(`${navigation}`);
+          router.back();
         }}
       >
         <Image style={styles.backArrow} source={backArrow} />

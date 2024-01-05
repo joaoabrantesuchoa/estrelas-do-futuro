@@ -41,14 +41,14 @@ function StudentList() {
       <StudentIcon
         studentName={item.name}
         studentImage={item.photoUrl}
-        studentId={item.id}
+        studentId={item._id}
       />
     );
   };
 
   return (
     <SafeAreaView>
-      <BackArrow navigation={"/studentCategory"} />
+      <BackArrow />
       <View style={styles.container}>
         <TextInput
           style={styles.textInputContainer}
