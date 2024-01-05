@@ -11,7 +11,7 @@ function StudentIcon({ studentName, studentId, studentImage }) {
       />
       <Button
         name={`${studentName}`}
-        navigation={`/studentView/${studentId}`}
+        navigation={`/student/visualization/${studentId}`}
       />
     </View>
   );

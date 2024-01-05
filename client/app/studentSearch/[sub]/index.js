@@ -41,7 +41,7 @@ function StudentList() {
       <StudentIcon
         studentName={item.name}
         studentImage={item.photoUrl}
-        studentId={item.id}
+        studentId={item._id}
       />
     );
   };
