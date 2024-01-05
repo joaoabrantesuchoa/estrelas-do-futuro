@@ -16,7 +16,6 @@ test("POST /students", async ({ expect }) => {
     fatherName: "Father",
     responsablePhone: "98765432101",
     medicalObservations: "None",
-    position: "atacante",
   };
 
   const response = await request(app).post("/students").send(newStudent);
@@ -29,7 +28,6 @@ test("POST /students", async ({ expect }) => {
   expect(response.body.medicalObservations).toBe(
     newStudent.medicalObservations
   );
-  expect(response.body.position).toBe(newStudent.position);
 });
 
 test("POST /students with category calculation", async ({ expect }) => {
@@ -40,7 +38,6 @@ test("POST /students with category calculation", async ({ expect }) => {
     fatherName: "Father",
     responsablePhone: "98765432101",
     medicalObservations: "None",
-    position: "atacante",
   };
 
   const response = await request(app).post("/students").send(newStudent);
@@ -57,7 +54,6 @@ test("POST /students with missing fields", async ({ expect }) => {
     fatherName: "Father",
     responsablePhone: "98765432101",
     medicalObservations: "None",
-    position: "atacante",
   };
 
   const response = await request(app).post("/students").send(newStudent);
@@ -77,7 +73,6 @@ test("GET /students/:id", async ({ expect }) => {
     fatherName: "Father",
     responsablePhone: "98765432101",
     medicalObservations: "None",
-    position: "atacante",
   };
   const created = await request(app).post("/students").send(newStudent);
 
@@ -94,7 +89,6 @@ test("DELETE /students/:id", async ({ expect }) => {
     fatherName: "Father",
     responsablePhone: "98765432101",
     medicalObservations: "None",
-    position: "atacante",
   };
   const created = await request(app).post("/students").send(newStudent);
 
@@ -111,7 +105,6 @@ test("Student category updates as time passes", async ({ expect }) => {
     fatherName: "Father",
     responsablePhone: "98765432101",
     medicalObservations: "None",
-    position: "atacante",
   };
 
   const response = await request(app).post("/students").send(newStudent);
@@ -142,7 +135,6 @@ test("Get the students by category", async ({ expect }) => {
     fatherName: "Father",
     responsablePhone: "98765432101",
     medicalObservations: "None",
-    position: "atacante",
   };
 
   const sub5Student = {
@@ -152,7 +144,6 @@ test("Get the students by category", async ({ expect }) => {
     fatherName: "Father",
     responsablePhone: "98765432101",
     medicalObservations: "None",
-    position: "atacante",
   };
 
   let response = await request(app).post("/students").send(sub25Student);
