@@ -1,7 +1,7 @@
-import { connectDB } from "../db.js";
-import Student from "../models/student.js";
+import { connectDB } from "./db.js";
+import Student from "./models/student.js";
 import request from "supertest";
-import app from "../app.js";
+import app from "./app.js";
 
 async function seedStudents() {
   await connectDB();
