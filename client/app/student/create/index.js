@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, View, TouchableOpacity, Button } from "react-native";
-import BackArrow from "../components/backArrow";
-import TextBox from "../components/textBox";
+import { Text, View, TouchableOpacity } from "react-native";
+import TextBox from "../../components/textBox";
 import { styles } from "./styles";
+import { addStudent } from "../../../api";
+import { useRouter } from "expo-router";
+import BackArrow from "../../components/backArrow";
 
 function Registration() {
+  const router = useRouter();
+
   const [studentName, setStudentName] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [fatherName, setFatherName] = useState("");
@@ -13,22 +17,25 @@ function Registration() {
   const [guardianPhone, setGuardianPhone] = useState("");
   const [medicalNotes, setMedicalNotes] = useState("");
 
-  const saveValues = () => {
-    // Aqui você pode salvar os valores onde quiser
-    console.log(
-      studentName,
-      birthDate,
-      fatherName,
-      motherName,
-      guardianPhone,
-      medicalNotes
-    );
-  };
+  const registerStudent = useCallback(async () => {
+    const studentData = {
+      name: studentName,
+      birthDate: birthDate,
+      motherName: motherName,
+      fatherName: fatherName,
+      responsablePhone: guardianPhone,
+      medicalObservations: medicalNotes,
+    };
+
+    await addStudent(studentData);
+    router.back();
+  });
 
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <BackArrow navigation={"/homePage"} />
+        <BackArrow />
+
         <View style={styles.textContainer}>
           <Text>Nome do aluno</Text>
           <TextBox onChangeText={setStudentName} value={studentName} />
@@ -43,8 +50,11 @@ function Registration() {
           <Text>Observações médicas</Text>
           <TextBox onChangeText={setMedicalNotes} value={medicalNotes} />
         </View>
-        <TouchableOpacity style={styles.buttonContainer} onPress={saveValues}>
-          cadastrar
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={registerStudent}
+        >
+          Cadastrar
         </TouchableOpacity>
       </View>
     </SafeAreaView>
