@@ -33,9 +33,8 @@ function Registration() {
 
   return (
     <SafeAreaView>
+      <BackArrow />
       <View style={styles.container}>
-        <BackArrow />
-
         <View style={styles.textContainer}>
           <Text>Nome do aluno</Text>
           <TextBox onChangeText={setStudentName} value={studentName} />
@@ -54,7 +53,7 @@ function Registration() {
           style={styles.buttonContainer}
           onPress={registerStudent}
         >
-          Cadastrar
+          <Text>Cadastrar</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

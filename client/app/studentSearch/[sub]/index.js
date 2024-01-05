@@ -64,7 +64,7 @@ function StudentList() {
           renderItem={renderItem}
           keyExtractor={(item) => item._id}
         />
-        <Button name={"Adicionar aluno"} navigation={"/studentRegistration"} />
+        <Button name={"Adicionar aluno"} navigation={"/student/create"} />
       </View>
     </SafeAreaView>
   );
