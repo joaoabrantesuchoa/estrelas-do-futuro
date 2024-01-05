@@ -42,7 +42,7 @@ const studentSchema = new mongoose.Schema({
 
   position: {
     type: String,
-    required: true,
+    required: false,
   },
 
   category: {

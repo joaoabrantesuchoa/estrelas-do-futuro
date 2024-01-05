@@ -12,7 +12,6 @@ router.post("/", async (req, res) => {
       fatherName,
       responsablePhone,
       medicalObservations,
-      position,
     } = req.body;
 
     if (
@@ -21,8 +20,7 @@ router.post("/", async (req, res) => {
       !motherName ||
       !fatherName ||
       !responsablePhone ||
-      !medicalObservations ||
-      !position
+      !medicalObservations
     ) {
       return res.status(400).send({
         message:
@@ -37,7 +35,6 @@ router.post("/", async (req, res) => {
       fatherName,
       responsablePhone,
       medicalObservations,
-      position,
     });
 
     return res.status(201).send(newStudent);
