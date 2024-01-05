@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     alignContent: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
   },
   studentIconList: {
     maxWidth: "auto",
@@ -13,8 +13,8 @@ export const styles = StyleSheet.create({
   },
   textInputContainer: {
     alignItems: "center",
-    width: 324,
-    height: 36,
+    width: 350,
+    height: 35,
     flexShrink: 0,
     borderRadius: 10,
     backgroundColor: "#D9D9D9",
@@ -29,5 +29,6 @@ export const styles = StyleSheet.create({
     fontWeight: "100",
     lineHeight: 16,
     letterSpacing: -0.3,
+    marginBottom: 15,
   },
 });
