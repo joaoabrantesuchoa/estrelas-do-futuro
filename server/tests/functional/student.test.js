@@ -14,7 +14,6 @@ test("POST /students", async ({ expect }) => {
     birthDate: "01/01/2000",
     motherName: "Mother",
     fatherName: "Father",
-    phone: "12345678901",
     responsablePhone: "98765432101",
     medicalObservations: "None",
     position: "atacante",
@@ -26,7 +25,6 @@ test("POST /students", async ({ expect }) => {
   expect(response.body.birthDate).toBe(newStudent.birthDate);
   expect(response.body.motherName).toBe(newStudent.motherName);
   expect(response.body.fatherName).toBe(newStudent.fatherName);
-  expect(response.body.phone).toBe(newStudent.phone);
   expect(response.body.responsablePhone).toBe(newStudent.responsablePhone);
   expect(response.body.medicalObservations).toBe(
     newStudent.medicalObservations
@@ -40,7 +38,6 @@ test("POST /students with category calculation", async ({ expect }) => {
     birthDate: "01/01/2000",
     motherName: "Mother",
     fatherName: "Father",
-    phone: "12345678901",
     responsablePhone: "98765432101",
     medicalObservations: "None",
     position: "atacante",
@@ -58,7 +55,6 @@ test("POST /students with missing fields", async ({ expect }) => {
     // birthDate is missing
     motherName: "Mother",
     fatherName: "Father",
-    phone: "12345678901",
     responsablePhone: "98765432101",
     medicalObservations: "None",
     position: "atacante",
@@ -79,7 +75,6 @@ test("GET /students/:id", async ({ expect }) => {
     birthDate: "01/01/2000",
     motherName: "Mother",
     fatherName: "Father",
-    phone: "12345678901",
     responsablePhone: "98765432101",
     medicalObservations: "None",
     position: "atacante",
@@ -97,7 +92,6 @@ test("DELETE /students/:id", async ({ expect }) => {
     birthDate: "01/01/2000",
     motherName: "Mother",
     fatherName: "Father",
-    phone: "12345678901",
     responsablePhone: "98765432101",
     medicalObservations: "None",
     position: "atacante",
@@ -115,7 +109,6 @@ test("Student category updates as time passes", async ({ expect }) => {
     birthDate: "01/01/2000", // A idade será 23
     motherName: "Mother",
     fatherName: "Father",
-    phone: "12345678901",
     responsablePhone: "98765432101",
     medicalObservations: "None",
     position: "atacante",
@@ -147,7 +140,6 @@ test("Get the students by category", async ({ expect }) => {
     birthDate: "01/01/2000",
     motherName: "Mother",
     fatherName: "Father",
-    phone: "12345678901",
     responsablePhone: "98765432101",
     medicalObservations: "None",
     position: "atacante",
@@ -158,7 +150,6 @@ test("Get the students by category", async ({ expect }) => {
     birthDate: "01/01/2019",
     motherName: "Mother",
     fatherName: "Father",
-    phone: "12345678901",
     responsablePhone: "98765432101",
     medicalObservations: "None",
     position: "atacante",

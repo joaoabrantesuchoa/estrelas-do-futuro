@@ -10,7 +10,6 @@ router.post("/", async (req, res) => {
       birthDate,
       motherName,
       fatherName,
-      phone,
       responsablePhone,
       medicalObservations,
       position,
@@ -21,7 +20,6 @@ router.post("/", async (req, res) => {
       !birthDate ||
       !motherName ||
       !fatherName ||
-      !phone ||
       !responsablePhone ||
       !medicalObservations ||
       !position
@@ -37,7 +35,6 @@ router.post("/", async (req, res) => {
       birthDate,
       motherName,
       fatherName,
-      phone,
       responsablePhone,
       medicalObservations,
       position,
