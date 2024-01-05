@@ -20,7 +20,8 @@ Projeto para a escolinha de futebol estrelas do futuro com o objetivo de auxilia
   1) Execute `npm run test` para rodar em server para rodar os testes do projeto.
 
 ## Deploy
-O deploy é feito pelo Railway (https://railway.app)
+O deploy do front-end é feito pelo Expo.
+O deploy do back-end é feito pelo render.
 
 ## Contribuição
   - [Fluxo de desenvolvimento](#fluxo-de-desenvolvimento)
