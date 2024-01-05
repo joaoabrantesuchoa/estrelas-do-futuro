@@ -11,7 +11,7 @@ function BackArrow({ navigation }) {
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          router.replace(`${navigation}`);
+          router.back();
         }}
       >
         <Image style={styles.backArrow} source={backArrow} />

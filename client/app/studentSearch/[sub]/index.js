@@ -48,7 +48,7 @@ function StudentList() {
 
   return (
     <SafeAreaView>
-      <BackArrow navigation={"/studentCategory"} />
+      <BackArrow />
       <View style={styles.container}>
         <TextInput
           style={styles.textInputContainer}

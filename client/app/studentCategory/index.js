@@ -33,7 +33,7 @@ function StudentCategory() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <BackArrow style={styles.backArrow} navigation={"/homePage"} />
+      <BackArrow style={styles.backArrow} />
       <View style={styles.categories}>
         <Text style={styles.bodyText}>
           Selecione uma categoria para listar os alunos
