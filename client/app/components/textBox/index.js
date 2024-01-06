@@ -1,16 +1,23 @@
 import React from "react";
-import { TextInput, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { styles } from "./styles";
 
-const TextBox = ({ onChangeText, value }) => {
+const TextBox = ({ name, onChangeText, value }) => {
   return (
-    <View style={styles.boxContainer}>
-      <TextInput
-        style={styles.textContainer}
-        onChangeText={onChangeText}
-        value={value}
-      />
-    </View>
+    <KeyboardAwareScrollView
+      keyboardShouldPersistTaps={"never"}
+      scrollEnabled={false}
+    >
+      <Text>{name}</Text>
+      <View style={styles.InputContainer}>
+        <TextInput
+          style={styles.textContainer}
+          onChangeText={onChangeText}
+          value={value}
+        />
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
