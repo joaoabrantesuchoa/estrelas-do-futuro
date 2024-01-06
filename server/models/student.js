@@ -25,16 +25,6 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phone: {
-    type: String,
-    required: true,
-    validate: {
-      validator: function (value) {
-        return /^\d{11}$/.test(value);
-      },
-      message: "Phone number must have 11 digits (Brazilian format)",
-    },
-  },
   responsablePhone: {
     type: String,
     required: true,
@@ -52,7 +42,7 @@ const studentSchema = new mongoose.Schema({
 
   position: {
     type: String,
-    required: true,
+    required: false,
   },
 
   category: {
