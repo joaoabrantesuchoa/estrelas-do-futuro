@@ -9,6 +9,11 @@
       "resizeMode": "contain",
       "backgroundColor": "#FFFFFF"
     },
+    "icon": {
+      "image": "./images/homePageBrasao.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
     "plugins": ["expo-router"],
     "name": "client",
     "slug": "estrelas-do-futuro",
