@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import TextBox from "../../components/textBox";
 import { styles } from "./styles";
 import { addStudent } from "../../../api";
@@ -32,30 +32,44 @@ function Registration() {
   });
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <BackArrow />
-      <View style={styles.container}>
-        <View style={styles.textContainer}>
-          <Text>Nome do aluno</Text>
-          <TextBox onChangeText={setStudentName} value={studentName} />
-          <Text>Data de nascimento</Text>
-          <TextBox onChangeText={setBirthDate} value={birthDate} />
-          <Text>Nome do pai</Text>
-          <TextBox onChangeText={setFatherName} value={fatherName} />
-          <Text>Nome da mãe</Text>
-          <TextBox onChangeText={setMotherName} value={motherName} />
-          <Text>Telefone do responsável</Text>
-          <TextBox onChangeText={setGuardianPhone} value={guardianPhone} />
-          <Text>Observações médicas</Text>
-          <TextBox onChangeText={setMedicalNotes} value={medicalNotes} />
-        </View>
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={registerStudent}
-        >
-          <Text>Cadastrar</Text>
-        </TouchableOpacity>
-      </View>
+      <TextBox
+        name={"Nome do aluno"}
+        onChangeText={setStudentName}
+        value={studentName}
+      />
+      <TextBox
+        name={"Data de nascimento"}
+        onChangeText={setBirthDate}
+        value={birthDate}
+      />
+      <TextBox
+        name={"Nome do pai"}
+        onChangeText={setFatherName}
+        value={fatherName}
+      />
+      <TextBox
+        name={"Nome da mãe"}
+        onChangeText={setMotherName}
+        value={motherName}
+      />
+      <TextBox
+        name={"Telefone do responsável"}
+        onChangeText={setGuardianPhone}
+        value={guardianPhone}
+      />
+      <TextBox
+        name={"Observações médicas"}
+        onChangeText={setMedicalNotes}
+        value={medicalNotes}
+      />
+      <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={registerStudent}
+      >
+        <Text>Cadastrar</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
