@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { View, TextInput, FlatList } from "react-native";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
+import { View, TextInput, FlatList, Keyboard } from "react-native";
 import { fetchStudents } from "../../../api";
 import { styles } from "./styles";
 import { useLocalSearchParams } from "expo-router";
@@ -11,26 +11,23 @@ import Button from "../../components/button";
 function StudentList() {
   const { sub } = useLocalSearchParams();
 
+  const [searchText, setSearchText] = useState("");
   const [studentsData, setStudentsData] = useState([]);
-  const [filteredStudentsData, setFilteredStudentsData] = useState([]);
 
   const fetchStudentsData = useCallback(async () => {
     const data = await fetchStudents(sub);
     setStudentsData(data);
-    setFilteredStudentsData(data);
   }, []);
 
-  const filterStudents = (searchText) => {
+  const filteredStudentsData = useMemo(() => {
     if (searchText === "") {
-      setFilteredStudentsData(studentsData);
+      return studentsData;
     } else {
-      setFilteredStudentsData(
-        studentsData.filter((student) =>
-          student.name.toLowerCase().includes(searchText.toLowerCase())
-        )
+      return studentsData.filter((student) =>
+        student.name.toLowerCase().includes(searchText.toLowerCase())
       );
     }
-  };
+  }, [studentsData, searchText]);
 
   useEffect(() => {
     fetchStudentsData();
@@ -52,10 +49,12 @@ function StudentList() {
       <View style={styles.container}>
         <TextInput
           style={styles.textInputContainer}
+          value={searchText}
           placeholderTextColor="#696969"
           textAlign="center"
-          onChangeText={(texto) => filterStudents(texto)}
+          onChangeText={(texto) => setSearchText(texto)}
           placeholder="Pesquise o aluno pelo nome"
+          keyboardType="default"
         />
 
         <FlatList
