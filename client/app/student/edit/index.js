@@ -63,11 +63,11 @@ function edit() {
       motherName: motherName,
       fatherName: fatherName,
       responsablePhone: guardianPhone,
-      category: position,
+      position: position,
       medicalObservations: medicalNotes,
     };
 
-    await editStudent(studentData);
+    await editStudent(studentId, studentData);
     router.back();
   });
 
