@@ -16,8 +16,6 @@ function edit() {
     setStudentData(student);
   }, []);
 
-  console.log(studentData);
-
   useEffect(() => {
     fetchStudentsData();
   }, [fetchStudentsData]);
