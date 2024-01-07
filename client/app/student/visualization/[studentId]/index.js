@@ -57,7 +57,10 @@ function StudentPage() {
       </View>
 
       <View style={styles.buttonRow}>
-        <Button name={"Editar"} />
+        <Button
+          navigation={`student/edit?studentId=${studentId}`}
+          name={"Editar"}
+        />
         <Button name={"Comprovantes"} />
       </View>
       <Button name={"Ficha de avaliação"} />
