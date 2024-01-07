@@ -176,3 +176,81 @@ test("Get the students by category", async ({ expect }) => {
 
   expect(getResponse.body.length).toBe(2);
 });
+
+test("PUT - change the student model", async ({ expect }) => {
+  await Student.deleteMany();
+
+  const student = {
+    name: "sub 25 Student",
+    birthDate: "01/01/2000",
+    motherName: "Mother",
+    fatherName: "Father",
+    responsablePhone: "98765432101",
+    medicalObservations: "None",
+  };
+
+  let response = await request(app).post("/students").send(student);
+  expect(response.status).toBe(201);
+  expect(response.body.name).toBe(student.name);
+
+  const studentId = response.body._id;
+
+  const studentChange = {
+    name: "New Student name",
+    birthDate: "01/01/2005",
+    motherName: "New mother name",
+    fatherName: "New father name",
+    responsablePhone: "8399149552",
+    medicalObservations: "Issues with dipirona",
+    position: "Atacante",
+  };
+  ``;
+  response = await request(app)
+    .put(`/students/${studentId}`)
+    .send(studentChange);
+  expect(response.status).toBe(200);
+  expect(response.body.name).toBe(studentChange.name);
+  expect(response.body.birthDate).toBe(studentChange.birthDate);
+  expect(response.body.motherName).toBe(studentChange.motherName);
+  expect(response.body.fatherName).toBe(studentChange.fatherName);
+  expect(response.body.responsablePhone).toBe(studentChange.responsablePhone);
+  expect(response.body.medicalObservations).toBe(
+    studentChange.medicalObservations
+  );
+  expect(response.body.photoUrl).toBe(undefined);
+});
+
+test("PUT - change only the specified elements", async ({ expect }) => {
+  await Student.deleteMany();
+
+  const student = {
+    name: "sub 25 Student",
+    birthDate: "01/01/2000",
+    motherName: "Mother",
+    fatherName: "Father",
+    responsablePhone: "98765432101",
+    medicalObservations: "None",
+  };
+
+  let response = await request(app).post("/students").send(student);
+  expect(response.status).toBe(201);
+  expect(response.body.name).toBe(student.name);
+
+  const studentId = response.body._id;
+
+  const studentChange = {
+    name: "New Student name",
+  };
+  ``;
+  response = await request(app)
+    .put(`/students/${studentId}`)
+    .send(studentChange);
+  expect(response.status).toBe(200);
+  expect(response.body.name).toBe(studentChange.name);
+  expect(response.body.birthDate).toBe(student.birthDate);
+  expect(response.body.motherName).toBe(student.motherName);
+  expect(response.body.fatherName).toBe(student.fatherName);
+  expect(response.body.responsablePhone).toBe(student.responsablePhone);
+  expect(response.body.medicalObservations).toBe(student.medicalObservations);
+  expect(response.body.photoUrl).toBe(undefined);
+});
