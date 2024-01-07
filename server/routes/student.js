@@ -75,6 +75,63 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+
+    if (!student) {
+      return res.status(404).send({
+        message: "Student not found",
+      });
+    }
+
+    const updatedStudent = await Student.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name !== undefined ? req.body.name : student.name,
+        birthDate:
+          req.body.birthDate !== undefined
+            ? req.body.birthDate
+            : student.birthDate,
+        motherName:
+          req.body.motherName !== undefined
+            ? req.body.motherName
+            : student.motherName,
+        fatherName:
+          req.body.fatherName !== undefined
+            ? req.body.fatherName
+            : student.fatherName,
+        responsablePhone:
+          req.body.responsablePhone !== undefined
+            ? req.body.responsablePhone
+            : student.responsablePhone,
+        medicalObservations:
+          req.body.medicalObservations !== undefined
+            ? req.body.medicalObservations
+            : student.medicalObservations,
+        position:
+          req.body.position !== undefined
+            ? req.body.position
+            : student.position,
+        category:
+          req.body.category !== undefined
+            ? req.body.category
+            : student.category,
+        photoUrl:
+          req.body.photoUrl !== undefined
+            ? req.body.photoUrl
+            : student.photoUrl,
+      },
+      { new: true }
+    );
+
+    return res.status(200).send(updatedStudent);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
 router.delete("/:id", async (req, res) => {
   try {
     const deletedStudent = await Student.findByIdAndDelete(req.params.id);
