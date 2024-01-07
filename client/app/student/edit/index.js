@@ -47,7 +47,7 @@ function edit() {
       setGuardianPhone(studentData.responsablePhone);
     }
     if (studentData.category) {
-      setPosition(studentData.category);
+      setPosition(studentData.position);
     }
     if (studentData.medicalObservations) {
       setMedicalNotes(studentData.medicalObservations);
