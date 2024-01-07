@@ -73,8 +73,8 @@ function edit() {
 
   return (
     <SafeAreaView>
-      <BackArrow navigation={`student/vizualization/${studentId}`} />
       <View style={styles.container}>
+        <BackArrow />
         <TextBox
           name={"Nome do aluno"}
           onChangeText={setStudentName}
