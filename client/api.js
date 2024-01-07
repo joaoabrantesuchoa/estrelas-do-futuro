@@ -40,7 +40,7 @@ export async function editStudent(studentData) {
     const response = await axios.put(url, studentData);
     return response.data;
   } catch (error) {
-    console.error("Erro ao cadastrar um novo estudante", error);
+    console.error("Erro ao editar dados de um estudante", error);
   }
 }
 
