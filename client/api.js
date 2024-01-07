@@ -34,13 +34,14 @@ export async function addStudent(studentData) {
   }
 }
 
-export async function editStudent(studentData) {
+export async function editStudent(studentId, studentData) {
   try {
     let url = process.env.EXPO_PUBLIC_API_URL + "/students";
+    url += `/${studentId}`;
     const response = await axios.put(url, studentData);
     return response.data;
   } catch (error) {
-    console.error("Erro ao cadastrar um novo estudante", error);
+    console.error("Erro ao editar dados de um estudante", error);
   }
 }
 
