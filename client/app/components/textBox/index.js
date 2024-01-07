@@ -3,7 +3,7 @@ import { Text, TextInput, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { styles } from "./styles";
 
-const TextBox = ({ name, onChangeText, value }) => {
+const TextBox = ({ name, onChangeText, placeHolder, value }) => {
   return (
     <KeyboardAwareScrollView
       keyboardShouldPersistTaps={"never"}
@@ -14,6 +14,8 @@ const TextBox = ({ name, onChangeText, value }) => {
         <TextInput
           style={styles.textContainer}
           onChangeText={onChangeText}
+          placeholder={placeHolder}
+          placeholderTextColor="#999"
           value={value}
         />
       </View>
