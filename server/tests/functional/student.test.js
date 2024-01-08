@@ -217,7 +217,7 @@ test("PUT - change the student model", async ({ expect }) => {
   expect(response.body.medicalObservations).toBe(
     studentChange.medicalObservations
   );
-  expect(response.body.photoUrl).toBe(undefined);
+  expect(response.body.photo).toBe(undefined);
 });
 
 test("PUT - change only the specified elements", async ({ expect }) => {
@@ -252,5 +252,5 @@ test("PUT - change only the specified elements", async ({ expect }) => {
   expect(response.body.fatherName).toBe(student.fatherName);
   expect(response.body.responsablePhone).toBe(student.responsablePhone);
   expect(response.body.medicalObservations).toBe(student.medicalObservations);
-  expect(response.body.photoUrl).toBe(undefined);
+  expect(response.body.photo).toBe(undefined);
 });

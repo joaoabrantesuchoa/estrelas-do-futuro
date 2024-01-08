@@ -49,8 +49,9 @@ const studentSchema = new mongoose.Schema({
     type: Number,
   },
 
-  photoUrl: {
-    type: String,
+  photo: {
+    type: Buffer,
+    contentType: String,
   },
 });
 
