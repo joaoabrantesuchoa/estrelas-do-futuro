@@ -4,6 +4,8 @@ import sinon from "sinon";
 import Student from "../../models/student";
 import app from "../../app";
 
+const fs = require("fs");
+
 beforeAll(async () => {
   await Student.deleteMany();
 });
@@ -253,4 +255,38 @@ test("PUT - change only the specified elements", async ({ expect }) => {
   expect(response.body.responsablePhone).toBe(student.responsablePhone);
   expect(response.body.medicalObservations).toBe(student.medicalObservations);
   expect(response.body.photo).toBe(undefined);
+});
+
+test("PUT - update the student photo", async ({ expect }) => {
+  await Student.deleteMany();
+
+  const student = {
+    name: "Student",
+    birthDate: "01/01/2000",
+    motherName: "Mother",
+    fatherName: "Father",
+    responsablePhone: "98765432101",
+    medicalObservations: "None",
+  };
+
+  let response = await request(app).post("/students").send(student);
+  expect(response.status).toBe(201);
+  expect(response.body.name).toBe(student.name);
+
+  const studentId = response.body._id;
+
+  const path =
+    "/home/joao/Projects/estrelas-do-futuro/server/tests/functional/brasao.jpg";
+
+  const photo = fs.readFileSync(path);
+
+  response = await request(app)
+    .put(`/students/photo/${studentId}`)
+    .attach("photo", photo, "photo.jpg");
+
+  expect(response.status).toBe(200);
+
+  response = await request(app).get(`/students/${studentId}`);
+  expect(response.status).toBe(200);
+  expect(response.body.photo.data).toBeDefined();
 });
