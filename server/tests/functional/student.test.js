@@ -4,6 +4,8 @@ import sinon from "sinon";
 import Student from "../../models/student";
 import app from "../../app";
 
+const fs = require("fs");
+
 beforeAll(async () => {
   await Student.deleteMany();
 });
@@ -63,6 +65,69 @@ test("POST /students with missing fields", async ({ expect }) => {
 test("GET /students", async ({ expect }) => {
   const response = await request(app).get("/students");
   expect(response.status).toBe(200);
+});
+
+test("GET /students images is being returned as base64", async ({ expect }) => {
+  await Student.deleteMany();
+
+  const student = {
+    name: "Student",
+    birthDate: "01/01/2000",
+    motherName: "Mother",
+    fatherName: "Father",
+    responsablePhone: "98765432101",
+    medicalObservations: "None",
+  };
+
+  let createResponse = await request(app).post("/students").send(student);
+  expect(createResponse.status).toBe(201);
+  expect(createResponse.body.name).toBe(student.name);
+
+  let studentId = createResponse.body._id;
+
+  const path =
+    "/home/joao/Projects/estrelas-do-futuro/server/tests/functional/brasao.jpg";
+
+  const photo = fs.readFileSync(path);
+
+  let response = await request(app)
+    .put(`/students/photo/${studentId}`)
+    .attach("photo", photo, "photo.jpg");
+  expect(response.status).toBe(200);
+
+  const secondStudent = {
+    name: "Second student",
+    birthDate: "01/01/2000",
+    motherName: "Mother",
+    fatherName: "Father",
+    responsablePhone: "98765432101",
+    medicalObservations: "None",
+  };
+
+  createResponse = await request(app).post("/students").send(secondStudent);
+  expect(createResponse.status).toBe(201);
+  expect(createResponse.body.name).toBe(secondStudent.name);
+
+  studentId = createResponse.body._id;
+
+  response = await request(app)
+    .put(`/students/photo/${studentId}`)
+    .attach("photo", photo, "photo.jpg");
+  expect(response.status).toBe(200);
+
+  const getResponse = await request(app).get("/students");
+  expect(getResponse.status).toBe(200);
+  const body = getResponse.body;
+
+  expect(typeof body[0].photo).toBe("string");
+  expect(Buffer.from(body[0].photo, "base64").toString("base64")).toBe(
+    body[0].photo
+  );
+
+  expect(typeof body[1].photo).toBe("string");
+  expect(Buffer.from(body[1].photo, "base64").toString("base64")).toBe(
+    body[1].photo
+  );
 });
 
 test("GET /students/:id", async ({ expect }) => {
@@ -217,7 +282,7 @@ test("PUT - change the student model", async ({ expect }) => {
   expect(response.body.medicalObservations).toBe(
     studentChange.medicalObservations
   );
-  expect(response.body.photoUrl).toBe(undefined);
+  expect(response.body.photo).toBe(undefined);
 });
 
 test("PUT - change only the specified elements", async ({ expect }) => {
@@ -252,5 +317,42 @@ test("PUT - change only the specified elements", async ({ expect }) => {
   expect(response.body.fatherName).toBe(student.fatherName);
   expect(response.body.responsablePhone).toBe(student.responsablePhone);
   expect(response.body.medicalObservations).toBe(student.medicalObservations);
-  expect(response.body.photoUrl).toBe(undefined);
+  expect(response.body.photo).toBe(undefined);
+});
+
+test("PUT - update the student photo", async ({ expect }) => {
+  await Student.deleteMany();
+
+  const student = {
+    name: "Student",
+    birthDate: "01/01/2000",
+    motherName: "Mother",
+    fatherName: "Father",
+    responsablePhone: "98765432101",
+    medicalObservations: "None",
+  };
+
+  let response = await request(app).post("/students").send(student);
+  expect(response.status).toBe(201);
+  expect(response.body.name).toBe(student.name);
+
+  const studentId = response.body._id;
+
+  const path =
+    "/home/joao/Projects/estrelas-do-futuro/server/tests/functional/brasao.jpg";
+
+  const photo = fs.readFileSync(path);
+
+  response = await request(app)
+    .put(`/students/photo/${studentId}`)
+    .attach("photo", photo, "photo.jpg");
+
+  expect(response.status).toBe(200);
+
+  response = await request(app).get(`/students/photo/${studentId}`);
+  expect(response.status).toBe(200);
+  expect(typeof response.body.photo).toBe("string");
+  expect(Buffer.from(response.body.photo, "base64").toString("base64")).toBe(
+    response.body.photo
+  );
 });

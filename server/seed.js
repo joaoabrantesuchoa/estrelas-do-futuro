@@ -18,7 +18,6 @@ async function seedStudents() {
       responsablePhone: "11987654321",
       medicalObservations: "Nenhuma",
       position: "Atacante",
-      photoUrl: "url_da_foto",
     },
     {
       name: "Ana Souza",
@@ -29,7 +28,6 @@ async function seedStudents() {
       responsablePhone: "11987654322",
       medicalObservations: "Alergia a amendoim",
       position: "Defensora",
-      photoUrl: "url_da_foto",
     },
     {
       name: "Pedro Santos",
@@ -40,7 +38,6 @@ async function seedStudents() {
       responsablePhone: "11987654323",
       medicalObservations: "Diabetes tipo 1",
       position: "Meio-campo",
-      photoUrl: "url_da_foto",
     },
     {
       name: "Lucas Lima",
@@ -51,7 +48,6 @@ async function seedStudents() {
       responsablePhone: "11987654324",
       medicalObservations: "Nenhuma",
       position: "Goleiro",
-      photoUrl: "url_da_foto",
     },
     {
       name: "Gabriela Gomes",
@@ -62,7 +58,6 @@ async function seedStudents() {
       responsablePhone: "11987654325",
       medicalObservations: "Asma",
       position: "Defensora",
-      photoUrl: "url_da_foto",
     },
     {
       name: "Rafael Ribeiro",
@@ -73,7 +68,6 @@ async function seedStudents() {
       responsablePhone: "11987654326",
       medicalObservations: "Nenhuma",
       position: "Atacante",
-      photoUrl: "url_da_foto",
     },
     {
       name: "Fernanda Ferreira",
@@ -84,7 +78,6 @@ async function seedStudents() {
       responsablePhone: "11987654327",
       medicalObservations: "Alergia a lactose",
       position: "Meio-campo",
-      photoUrl: "url_da_foto",
     },
     {
       name: "Eduardo Esteves",
@@ -95,7 +88,6 @@ async function seedStudents() {
       responsablePhone: "11987654328",
       medicalObservations: "Nenhuma",
       position: "Defensor",
-      photoUrl: "url_da_foto",
     },
     {
       name: "Isabela Ibarra",
@@ -106,7 +98,6 @@ async function seedStudents() {
       responsablePhone: "11987654329",
       medicalObservations: "Nenhuma",
       position: "Atacante",
-      photoUrl: "url_da_foto",
     },
     {
       name: "Daniel Dias",
@@ -117,7 +108,6 @@ async function seedStudents() {
       responsablePhone: "11987654330",
       medicalObservations: "Nenhuma",
       position: "Goleiro",
-      photoUrl: "url_da_foto",
     },
   ];
 
