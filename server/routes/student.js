@@ -79,6 +79,20 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/photo/:id", async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    if (!student) {
+      return res.status(404).send({ message: "Student not found" });
+    }
+    const photo = Buffer.from(student.photo).toString("base64");
+    return res.status(200).send({ photo });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
 router.put("/photo/:id", upload.single("photo"), async (req, res) => {
   try {
     const student = await Student.findById(req.params.id);

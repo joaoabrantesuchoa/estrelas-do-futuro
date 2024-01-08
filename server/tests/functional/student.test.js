@@ -286,7 +286,10 @@ test("PUT - update the student photo", async ({ expect }) => {
 
   expect(response.status).toBe(200);
 
-  response = await request(app).get(`/students/${studentId}`);
+  response = await request(app).get(`/students/photo/${studentId}`);
   expect(response.status).toBe(200);
-  expect(response.body.photo.data).toBeDefined();
+  expect(typeof response.body.photo).toBe("string");
+  expect(Buffer.from(response.body.photo, "base64").toString("base64")).toBe(
+    response.body.photo
+  );
 });
