@@ -58,7 +58,15 @@ router.get("/", async (req, res) => {
     } else {
       students = await Student.find();
     }
-    return res.status(200).send(students);
+
+    const studentsWithBase64Photos = students.map((student) => {
+      let photo;
+      if (student.photo) {
+        photo = Buffer.from(student.photo).toString("base64");
+      }
+      return { ...student._doc, photo };
+    });
+    return res.status(200).send(studentsWithBase64Photos);
   } catch (error) {
     console.error(error.message);
     res.status(500).send({ message: error.message });
