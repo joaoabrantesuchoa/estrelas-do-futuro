@@ -1,7 +1,11 @@
 import express from "express";
 import Student from "../models/student.js";
+import fs from "fs";
+import multer from "multer";
 
 const router = express.Router();
+
+const upload = multer({ dest: "uploads/" });
 
 router.post("/", async (req, res) => {
   try {
@@ -54,7 +58,15 @@ router.get("/", async (req, res) => {
     } else {
       students = await Student.find();
     }
-    return res.status(200).send(students);
+
+    const studentsWithBase64Photos = students.map((student) => {
+      let photo;
+      if (student.photo) {
+        photo = Buffer.from(student.photo).toString("base64");
+      }
+      return { ...student._doc, photo };
+    });
+    return res.status(200).send(studentsWithBase64Photos);
   } catch (error) {
     console.error(error.message);
     res.status(500).send({ message: error.message });
@@ -69,6 +81,46 @@ router.get("/:id", async (req, res) => {
       return res.status(404).send({ message: "Student not found" });
     }
     return res.status(200).send(student);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
+router.get("/photo/:id", async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    if (!student) {
+      return res.status(404).send({ message: "Student not found" });
+    }
+    const photo = Buffer.from(student.photo).toString("base64");
+    return res.status(200).send({ photo });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
+router.put("/photo/:id", upload.single("photo"), async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+
+    if (!student) {
+      return res.status(404).send({
+        message: "Student not found",
+      });
+    }
+    const photo = fs.readFileSync(req.file.path);
+
+    const updatedStudent = await Student.findByIdAndUpdate(
+      req.params.id,
+      {
+        photo: photo,
+      },
+      { new: true }
+    );
+
+    return res.status(200).send(updatedStudent);
   } catch (error) {
     console.error(error.message);
     res.status(500).send({ message: error.message });
