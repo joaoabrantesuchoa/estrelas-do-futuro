@@ -1,20 +1,64 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getStudentById } from "../../../../api";
+import {
+  editStudentPhoto,
+  getStudentById,
+  getStudentPhoto,
+} from "../../../../api";
 import { useLocalSearchParams } from "expo-router";
 import { Text, Image, View } from "react-native";
 import { useEffect, useState, useCallback } from "react";
 import { styles } from "./styles";
 import BackArrow from "../../../components/backArrow";
 import Button from "../../../components/button";
+import * as ImagePicker from "expo-image-picker";
 
 function StudentPage() {
   const { studentId } = useLocalSearchParams();
   const [studentData, setStudentData] = useState({});
+  const [profileImage, setProfileImage] = useState("");
 
   const fetchStudentsData = useCallback(async () => {
-    const student = await getStudentById(studentId);
-    setStudentData(student);
+    try {
+      const student = await getStudentById(studentId);
+      const studentPhoto = await getStudentPhoto(studentId);
+
+      setStudentData(student);
+      setPhoto(studentPhoto);
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
+
+  const openImageLibrary = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (status !== "granted") {
+      alert("Sorry, we need camera roll permissions to make this work!");
+    }
+
+    if (status === "granted") {
+      const response = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+      });
+
+      if (!response.canceled) {
+        try {
+          setProfileImage(response.uri);
+
+          const formData = new FormData();
+          formData.append("profile", {
+            name: new Date() + "_profile",
+            uri: profileImage,
+            type: "image/jpg",
+          });
+          await editStudentPhoto(studentId, formData);
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     fetchStudentsData();
@@ -26,10 +70,12 @@ function StudentPage() {
 
       <View>
         <Image
-          source={studentData.photoUrl ? { uri: studentData.photoUrl } : null}
+          source={profileImage ? { uri: profileImage } : null}
           style={styles.imageContainer}
         />
-        <Text style={styles.imageText}>Editar foto</Text>
+        <Text style={styles.imageText} onPress={openImageLibrary}>
+          Editar foto
+        </Text>
       </View>
 
       <View style={styles.columnContainer}>
