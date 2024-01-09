@@ -45,6 +45,36 @@ export async function editStudent(studentId, studentData) {
   }
 }
 
+export async function getStudentPhoto(studentId) {
+  try {
+    let url = process.env.EXPO_PUBLIC_API_URL + "/students" + "/photo";
+    url += `/${studentId}`;
+
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao editar dados de um estudante", error);
+  }
+}
+
+export async function editStudentPhoto(studentId, formData) {
+  try {
+    let url = process.env.EXPO_PUBLIC_API_URL + "/students" + "/photo";
+    url += `/${studentId}`;
+
+    const response = await axios.put(url, formData, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao editar dados de um estudante", error);
+  }
+}
+
 export async function deletedStudentById(studentId) {
   try {
     let url = process.env.EXPO_PUBLIC_API_URL + "/students";
