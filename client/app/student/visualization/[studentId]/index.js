@@ -20,10 +20,10 @@ function StudentPage() {
   const fetchStudentsData = useCallback(async () => {
     try {
       const student = await getStudentById(studentId);
-      const studentPhoto = await getStudentPhoto(studentId);
+      //const studentPhoto = await getStudentPhoto(studentId);
 
       setStudentData(student);
-      setProfileImage(studentPhoto);
+      //setProfileImage(studentPhoto);
     } catch (error) {
       console.error(error);
     }
@@ -46,13 +46,13 @@ function StudentPage() {
         try {
           setProfileImage(response.uri);
 
-          const formData = new FormData();
+          /*const formData = new FormData();
           formData.append("profile", {
             name: new Date() + "_profile",
             uri: profileImage,
             type: "image/jpg",
           });
-          await editStudentPhoto(studentId, formData);
+          await editStudentPhoto(studentId, formData);*/
         } catch (error) {
           console.log(error.message);
         }
