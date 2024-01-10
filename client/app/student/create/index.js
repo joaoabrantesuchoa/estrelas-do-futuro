@@ -12,12 +12,12 @@ import { Alert } from "react-native";
 function Registration() {
   const router = useRouter();
 
-  const [studentName, setStudentName] = useState("");
+  const [name, setStudentName] = useState("");
   const [birthDate, setBirthDate] = useState("");
   const [fatherName, setFatherName] = useState("");
   const [motherName, setMotherName] = useState("");
-  const [guardianPhone, setGuardianPhone] = useState("");
-  const [medicalNotes, setMedicalNotes] = useState("");
+  const [responsablePhone, setGuardianPhone] = useState("");
+  const [medicalObservations, setMedicalNotes] = useState("");
   const [studentNameError, setStudentNameError] = useState("");
   const [birthDateError, setBirthDateError] = useState("");
   const [fatherNameError, setFatherNameError] = useState("");
@@ -79,12 +79,12 @@ function Registration() {
 
   const registerStudent = useCallback(async () => {
     const studentData = {
-      name: studentName,
+      name: name,
       birthDate: birthDate,
       motherName: motherName,
       fatherName: fatherName,
-      responsablePhone: guardianPhone,
-      medicalObservations: medicalNotes,
+      responsablePhone: responsablePhone,
+      medicalObservations: medicalObservations,
     };
 
     try {
@@ -103,7 +103,7 @@ function Registration() {
     } catch (error) {
       error.inner.forEach((err) => {
         switch (err.path) {
-          case "studentName":
+          case "name":
             setStudentNameError(err.message);
             break;
           case "birthDate":
@@ -115,10 +115,10 @@ function Registration() {
           case "motherName":
             setMotherNameError(err.message);
             break;
-          case "guardianPhone":
+          case "responsablePhone":
             setGuardianPhoneError(err.message);
             break;
-          case "medicalNotes":
+          case "medicalObservations":
             setMedicalNotesError(err.message);
             break;
           default:
@@ -135,7 +135,7 @@ function Registration() {
         name={"Nome do aluno"}
         onChangeText={handleStudentNameChange}
         placeHolder={"Nome do aluno"}
-        value={studentName}
+        value={name}
         errorMessage={studentNameError}
       />
       <TextBox
@@ -163,14 +163,14 @@ function Registration() {
         name={"Telefone do responsável"}
         onChangeText={handleGuardianPhoneChange}
         placeHolder={"DD9XXXXXXXX"}
-        value={guardianPhone}
+        value={responsablePhone}
         errorMessage={guardianPhoneError}
       />
       <TextBox
         name={"Observações médicas"}
         onChangeText={handleMedicalNotesChange}
         placeHolder={"Observações médicas"}
-        value={medicalNotes}
+        value={medicalObservations}
         errorMessage={medicalNotesError}
       />
       <TouchableOpacity

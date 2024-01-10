@@ -24,13 +24,13 @@ function edit() {
 
   const router = useRouter();
 
-  const [studentName, setStudentName] = useState();
+  const [name, setStudentName] = useState();
   const [birthDate, setBirthDate] = useState();
   const [fatherName, setFatherName] = useState();
   const [motherName, setMotherName] = useState();
-  const [guardianPhone, setGuardianPhone] = useState();
+  const [responsablePhone, setGuardianPhone] = useState();
   const [position, setPosition] = useState();
-  const [medicalNotes, setMedicalNotes] = useState();
+  const [medicalObservations, setMedicalNotes] = useState();
   const [studentNameError, setStudentNameError] = useState();
   const [birthDateError, setBirthDateError] = useState();
   const [fatherNameError, setFatherNameError] = useState();
@@ -80,7 +80,7 @@ function edit() {
       .length(11, "O número de telefone deve ter 11 dígitos, incluindo o DDD.")
       .required("O telefone do responsável é obrigatório."),
     medicalObservations: Yup.string().required(
-      "As observações médicas são obrigatórias."
+      "As observações são obrigatórias."
     ),
   });
 
@@ -116,13 +116,13 @@ function edit() {
 
   const editDataStudent = useCallback(async () => {
     const studentData = {
-      name: studentName,
+      name: name,
       birthDate: birthDate,
       motherName: motherName,
       fatherName: fatherName,
-      responsablePhone: guardianPhone,
+      responsablePhone: responsablePhone,
       position: position,
-      medicalObservations: medicalNotes,
+      medicalObservations: medicalObservations,
     };
 
     try {
@@ -141,7 +141,7 @@ function edit() {
     } catch (error) {
       error.inner.forEach((err) => {
         switch (err.path) {
-          case "studentName":
+          case "name":
             setStudentNameError(err.message);
             break;
           case "birthDate":
@@ -153,10 +153,10 @@ function edit() {
           case "motherName":
             setMotherNameError(err.message);
             break;
-          case "guardianPhone":
+          case "responsablePhone":
             setGuardianPhoneError(err.message);
             break;
-          case "medicalNotes":
+          case "medicalObservations":
             setMedicalNotesError(err.message);
             break;
           default:
@@ -174,7 +174,7 @@ function edit() {
           name={"Nome do aluno"}
           onChangeText={handleStudentNameChange}
           placeHolder={"Nome do aluno"}
-          value={studentName}
+          value={name}
           errorMessage={studentNameError}
           defaultValue={""}
         />
@@ -206,7 +206,7 @@ function edit() {
           name={"Telefone do responsável"}
           onChangeText={handleGuardianPhoneChange}
           placeHolder={"DD9XXXXXXXX"}
-          value={guardianPhone}
+          value={responsablePhone}
           errorMessage={guardianPhoneError}
           defaultValue={""}
         />
@@ -220,7 +220,7 @@ function edit() {
           name={"Observações médicas"}
           onChangeText={handleMedicalNotesChange}
           placeHolder={"Observações médicas"}
-          value={medicalNotes}
+          value={medicalObservations}
           errorMessage={medicalNotesError}
           defaultValue={""}
         />
