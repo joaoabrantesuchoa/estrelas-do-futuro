@@ -48,11 +48,6 @@ const studentSchema = new mongoose.Schema({
   category: {
     type: Number,
   },
-
-  photo: {
-    type: Buffer,
-    contentType: String,
-  },
 });
 
 studentSchema.virtual("age").get(function () {
