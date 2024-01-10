@@ -1,5 +1,15 @@
 import axios from "axios";
 
+export async function connectToServer() {
+  try {
+    let url = process.env.EXPO_PUBLIC_API_URL;
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar estudantes:", error);
+  }
+}
+
 export async function fetchStudents(studentSub) {
   try {
     let url = process.env.EXPO_PUBLIC_API_URL + "/students";
