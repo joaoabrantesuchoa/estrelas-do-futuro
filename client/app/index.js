@@ -3,7 +3,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import HomePage from "./homePage/index.js";
 import { Text } from "react-native";
 import { connectToServer } from "../api.js";
-import { Text } from "react-native";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
