@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import HomePage from "./homePage/index.js";
+import { Text } from "react-native";
 import { connectToServer } from "../api.js";
 
 const Home = () => {
