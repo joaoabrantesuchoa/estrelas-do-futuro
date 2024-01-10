@@ -1,7 +1,25 @@
+import React, { useState, useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import HomePage from "./homePage/index.js";
+import { connectToServer } from "../api.js";
 
 const Home = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    connectToServer()
+      .then(() => setIsLoading(false))
+      .catch((error) => console.error(error));
+  }, []);
+
+  if (isLoading) {
+    return (
+      <SafeAreaProvider>
+        <Text>Carregando...</Text>
+      </SafeAreaProvider>
+    );
+  }
+
   return (
     <SafeAreaProvider>
       <HomePage />

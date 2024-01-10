@@ -1,9 +1,5 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  editStudentPhoto,
-  getStudentById,
-  getStudentPhoto,
-} from "../../../../api";
+import { getStudentById } from "../../../../api";
 import { useLocalSearchParams } from "expo-router";
 import { Text, Image, View } from "react-native";
 import { useEffect, useState, useCallback } from "react";
@@ -20,10 +16,7 @@ function StudentPage() {
   const fetchStudentsData = useCallback(async () => {
     try {
       const student = await getStudentById(studentId);
-      const studentPhoto = await getStudentPhoto(studentId);
-
       setStudentData(student);
-      setPhoto(studentPhoto);
     } catch (error) {
       console.error(error);
     }
@@ -45,14 +38,6 @@ function StudentPage() {
       if (!response.canceled) {
         try {
           setProfileImage(response.uri);
-
-          const formData = new FormData();
-          formData.append("profile", {
-            name: new Date() + "_profile",
-            uri: profileImage,
-            type: "image/jpg",
-          });
-          await editStudentPhoto(studentId, formData);
         } catch (error) {
           console.log(error.message);
         }
