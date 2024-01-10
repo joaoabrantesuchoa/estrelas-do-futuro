@@ -23,7 +23,7 @@ function StudentPage() {
       const studentPhoto = await getStudentPhoto(studentId);
 
       setStudentData(student);
-      setPhoto(studentPhoto);
+      setProfileImage(studentPhoto);
     } catch (error) {
       console.error(error);
     }
