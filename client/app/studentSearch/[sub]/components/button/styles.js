@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   button: {
     flex: 1,
     overflow: "auto",
-    width: "300px",
+    width: "250px",
     flexWrap: "wrap",
     numberOfLines: 2,
     paddingVertical: 10,
