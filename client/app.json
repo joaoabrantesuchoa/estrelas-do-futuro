@@ -10,7 +10,9 @@
       "backgroundColor": "#FFFFFF"
     },
     "icon": "./images/homePageBrasao.png",
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router"
+    ],
     "name": "Estrelas do futuro",
     "slug": "estrelas-do-futuro",
     "extra": {
@@ -18,16 +20,16 @@
         "origin": false
       },
       "eas": {
-        "projectId": "899e6077-3d6b-405e-88cc-082b99fd17a8"
+        "projectId": "4b2f6fec-bdb8-46f7-a49c-35c66d5e0728"
       }
     },
-    "owner": "joao.abrantesuchoa",
+    "owner": "stardofuturo",
     "android": {
-      "package": "com.joao.abrantesuchoa.estrelasdofuturo",
+      "package": "com.stardofuturo.estrelasdofuturo",
       "versionCode": 1
     },
     "ios": {
-      "bundleIdentifier": "com.joao.abrantesuchoa.estrelasdofuturo"
+      "bundleIdentifier": "com.stardofuturo.estrelasdofuturo"
     }
   }
 }
