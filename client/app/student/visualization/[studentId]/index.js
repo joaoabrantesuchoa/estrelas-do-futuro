@@ -94,7 +94,10 @@ function StudentPage() {
         />
         <Button name={"Comprovantes"} />
       </View>
-      <Button name={"Ficha de avaliação"} />
+      <Button
+        navigation={`student/evaluation?studentId=${studentId}`}
+        name={"Ficha de avaliação"}
+      />
     </SafeAreaView>
   );
 }

@@ -1,17 +1,14 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: {
-    marginTop: 30,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-  },
-  textContainer: {
-    textAlign: "left",
-  },
-  buttonContainer: {
-    width: 200,
-    height: 40,
+  button: {
+    flex: 1,
+    overflow: "auto",
+    width: "300px",
+    flexWrap: "wrap",
+    numberOfLines: 2,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     backgroundColor: "#DDDDDD",
     alignItems: "center",
     justifyContent: "center",
@@ -26,6 +23,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    marginTop: 5,
+    marginBottom: 10,
+    marginRight: 10,
   },
 });
