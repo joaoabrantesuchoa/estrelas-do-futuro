@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import TextBox from "../../components/textBox";
 import { styles } from "./styles";
 import { addStudent } from "../../../api";
@@ -129,56 +129,59 @@ function Registration() {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView>
       <BackArrow />
-      <TextBox
-        name={"Nome do aluno"}
-        onChangeText={handleStudentNameChange}
-        placeHolder={"Nome do aluno"}
-        value={name}
-        errorMessage={studentNameError}
-      />
-      <TextBox
-        name={"Data de nascimento"}
-        onChangeText={handleBirthDateChange}
-        placeHolder={"DD/MM/AAAA"}
-        value={birthDate}
-        errorMessage={birthDateError}
-      />
-      <TextBox
-        name={"Nome do pai"}
-        onChangeText={handleFatherNameChange}
-        placeHolder={"Nome do pai"}
-        value={fatherName}
-        errorMessage={fatherNameError}
-      />
-      <TextBox
-        name={"Nome da mãe"}
-        onChangeText={handleMotherNameChange}
-        placeHolder={"Nome da mãe"}
-        value={motherName}
-        errorMessage={motherNameError}
-      />
-      <TextBox
-        name={"Telefone do responsável"}
-        onChangeText={handleGuardianPhoneChange}
-        placeHolder={"DD9XXXXXXXX"}
-        value={responsablePhone}
-        errorMessage={guardianPhoneError}
-      />
-      <TextBox
-        name={"Observações médicas"}
-        onChangeText={handleMedicalNotesChange}
-        placeHolder={"Observações médicas"}
-        value={medicalObservations}
-        errorMessage={medicalNotesError}
-      />
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={registerStudent}
-      >
-        <Text>Cadastrar</Text>
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <TextBox
+          name={"Nome do aluno"}
+          onChangeText={handleStudentNameChange}
+          placeHolder={"Nome do aluno"}
+          value={name}
+          errorMessage={studentNameError}
+        />
+        <TextBox
+          name={"Data de nascimento"}
+          onChangeText={handleBirthDateChange}
+          placeHolder={"DD/MM/AAAA"}
+          value={birthDate}
+          errorMessage={birthDateError}
+        />
+        <TextBox
+          name={"Nome do pai"}
+          onChangeText={handleFatherNameChange}
+          placeHolder={"Nome do pai"}
+          value={fatherName}
+          errorMessage={fatherNameError}
+        />
+        <TextBox
+          name={"Nome da mãe"}
+          onChangeText={handleMotherNameChange}
+          placeHolder={"Nome da mãe"}
+          value={motherName}
+          errorMessage={motherNameError}
+        />
+        <TextBox
+          name={"Telefone do responsável"}
+          onChangeText={handleGuardianPhoneChange}
+          placeHolder={"DD9XXXXXXXX"}
+          value={responsablePhone}
+          errorMessage={guardianPhoneError}
+        />
+        <TextBox
+          name={"Observações médicas"}
+          onChangeText={handleMedicalNotesChange}
+          placeHolder={"Observações médicas"}
+          value={medicalObservations}
+          errorMessage={medicalNotesError}
+        />
+
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={registerStudent}
+        >
+          <Text>Cadastrar</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
