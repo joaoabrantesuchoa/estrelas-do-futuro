@@ -79,7 +79,7 @@ function StudentPage() {
           <Text style={styles.titleText}>Telefone do responsável</Text>
           <Text>{studentData.responsablePhone}</Text>
           <Text style={styles.titleText}>Categoria</Text>
-          <Text>{studentData.category}</Text>
+          <Text>Sub-{studentData.category}</Text>
           <Text style={styles.titleText}>Posição</Text>
           <Text>{studentData.position}</Text>
           <Text style={styles.titleText}>Observações médicas</Text>
