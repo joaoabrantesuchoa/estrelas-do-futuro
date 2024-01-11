@@ -1,5 +1,5 @@
 import { View, Image } from "react-native";
-import Button from "../../../../components/button";
+import Button from "../button";
 import { styles } from "./styles";
 
 function StudentIcon({ studentName, studentId, studentImage }) {
