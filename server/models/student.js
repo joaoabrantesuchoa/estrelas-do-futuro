@@ -57,15 +57,40 @@ studentSchema.virtual("age").get(function () {
 });
 
 studentSchema.pre("save", function (next) {
-  this.category = Math.floor(this.age) + 1;
+  this.category = this.calculateCategory();
 
   next();
 });
 
 studentSchema.methods.updateCategory = function () {
-  const birthDate = moment(this.birthDate, "DD/MM/YYYY");
-  const now = moment();
-  this.category = Math.floor(now.diff(birthDate, "years")) + 1;
+  this.category = this.calculateCategory();
+};
+
+studentSchema.methods.calculateCategory = function () {
+  const age = this.age;
+  let category;
+
+  if (age <= 3) {
+    category = 3;
+  } else if (age <= 5) {
+    category = 5;
+  } else if (age <= 7) {
+    category = 7;
+  } else if (age <= 9) {
+    category = 9;
+  } else if (age <= 11) {
+    category = 11;
+  } else if (age <= 13) {
+    category = 13;
+  } else if (age <= 15) {
+    category = 15;
+  } else if (age <= 17) {
+    category = 17;
+  } else {
+    category = age;
+  }
+
+  return category;
 };
 
 const Student = mongoose.model("Student", studentSchema);

@@ -45,7 +45,7 @@ test("POST /students with category calculation", async ({ expect }) => {
   const response = await request(app).post("/students").send(newStudent);
   expect(response.status).toBe(201);
   expect(response.body.name).toBe(newStudent.name);
-  expect(response.body.category).toBe(25);
+  expect(response.body.category).toBe(24);
 });
 
 test("POST /students with missing fields", async ({ expect }) => {
@@ -112,7 +112,7 @@ test("Student category updates as time passes", async ({ expect }) => {
   const response = await request(app).post("/students").send(newStudent);
   expect(response.status).toBe(201);
   expect(response.body.name).toBe(newStudent.name);
-  expect(response.body.category).toBe(25);
+  expect(response.body.category).toBe(24);
 
   const studentId = response.body._id;
 
@@ -122,7 +122,7 @@ test("Student category updates as time passes", async ({ expect }) => {
 
   const getResponse = await request(app).get(`/students/${studentId}`);
   expect(getResponse.status).toBe(200);
-  expect(getResponse.body.category).toBe(26);
+  expect(getResponse.body.category).toBe(25);
 
   clock.restore();
 });
@@ -130,9 +130,9 @@ test("Student category updates as time passes", async ({ expect }) => {
 test("Get the students by category", async ({ expect }) => {
   await Student.deleteMany();
 
-  const sub25Student = {
-    name: "sub 25 Student",
-    birthDate: "01/01/2000",
+  const sub17Student = {
+    name: "sub 17 Student",
+    birthDate: "01/01/2007",
     motherName: "Mother",
     fatherName: "Father",
     responsablePhone: "98765432101",
@@ -148,30 +148,30 @@ test("Get the students by category", async ({ expect }) => {
     medicalObservations: "None",
   };
 
-  let response = await request(app).post("/students").send(sub25Student);
+  let response = await request(app).post("/students").send(sub17Student);
   expect(response.status).toBe(201);
-  expect(response.body.name).toBe(sub25Student.name);
+  expect(response.body.name).toBe(sub17Student.name);
 
   response = await request(app).post("/students").send(sub5Student);
   expect(response.status).toBe(201);
   expect(response.body.name).toBe(sub5Student.name);
 
-  let studentSub = 25;
+  let studentSub = 17;
   let getResponse = await request(app).get(`/students?category=${studentSub}`);
-  const student25Body = getResponse.body;
+  const student17Body = getResponse.body;
 
-  expect(student25Body.length).toBe(1);
-  expect(student25Body[0].name).toBe("sub 25 Student");
-  expect(student25Body[0].category).toBe(25);
+  expect(student17Body.length).toBe(1);
+  expect(student17Body[0].name).toBe("sub 17 Student");
+  expect(student17Body[0].category).toBe(17);
 
-  studentSub = 6;
+  studentSub = 5;
   getResponse = await request(app).get(`/students?category=${studentSub}`);
   expect(getResponse.status).toBe(200);
   const student5Body = getResponse.body;
 
   expect(student5Body.length).toBe(1);
   expect(student5Body[0].name).toBe("sub 5 Student");
-  expect(student5Body[0].category).toBe(6);
+  expect(student5Body[0].category).toBe(5);
 
   getResponse = await request(app).get(`/students`);
   expect(getResponse.status).toBe(200);
