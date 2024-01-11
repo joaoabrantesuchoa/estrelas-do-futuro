@@ -2,16 +2,10 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   button: {
-    flex: 1,
-    overflow: "auto",
-    width: "250px",
-    flexWrap: "wrap",
-    numberOfLines: 2,
+    maxWidth: "85%",
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     backgroundColor: "#DDDDDD",
-    alignItems: "center",
-    justifyContent: "center",
     borderRadius: 15,
     borderColor: "#000",
     borderWidth: 1,
@@ -22,8 +16,6 @@ export const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 5,
-    marginBottom: 10,
-    marginRight: 10,
+    marginBottom: 30,
   },
 });

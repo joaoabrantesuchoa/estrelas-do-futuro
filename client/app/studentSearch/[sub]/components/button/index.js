@@ -9,15 +9,20 @@ function Button({ name, navigation }) {
 
   return (
     <SafeAreaView>
-      <View style={styles.button}>
-        <TouchableOpacity
-          onPress={() => {
-            router.push(`${navigation}`);
-          }}
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          router.push(`${navigation}`);
+        }}
+      >
+        <Text
+          styles={textStyles.buttonText}
+          numberOfLines={2}
+          ellipsizeMode="tail"
         >
-          <Text styles={textStyles.buttonText}>{name}</Text>
-        </TouchableOpacity>
-      </View>
+          {name}
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

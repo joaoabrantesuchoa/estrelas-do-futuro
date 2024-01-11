@@ -10,10 +10,9 @@ export const styles = StyleSheet.create({
   imageContainer: {
     width: 50,
     height: 50,
-    flexShrink: 0,
-    borderRadius: 54,
+    borderRadius: 50,
     backgroundColor: "#D9D9D9",
+    marginLeft: 10,
     marginRight: 20,
-    margin: 5,
   },
 });
