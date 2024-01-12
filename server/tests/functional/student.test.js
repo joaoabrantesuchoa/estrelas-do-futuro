@@ -30,12 +30,13 @@ test("POST /students", async ({ expect }) => {
   expect(response.body.medicalObservations).toBe(
     newStudent.medicalObservations
   );
+  expect(response.body.age).toBe(24);
 });
 
 test("POST /students with category calculation", async ({ expect }) => {
   const newStudent = {
     name: "Test",
-    birthDate: "01/01/2000",
+    birthDate: "12/01/2012",
     motherName: "Mother",
     fatherName: "Father",
     responsablePhone: "98765432101",
@@ -45,7 +46,8 @@ test("POST /students with category calculation", async ({ expect }) => {
   const response = await request(app).post("/students").send(newStudent);
   expect(response.status).toBe(201);
   expect(response.body.name).toBe(newStudent.name);
-  expect(response.body.category).toBe(24);
+  expect(response.body.age).toBe(12);
+  expect(response.body.category).toBe(13);
 });
 
 test("POST /students with missing fields", async ({ expect }) => {
@@ -102,7 +104,7 @@ test("DELETE /students/:id", async ({ expect }) => {
 test("Student category updates as time passes", async ({ expect }) => {
   const newStudent = {
     name: "Test",
-    birthDate: "01/01/2000", // A idade será 23
+    birthDate: "12/01/2012", // A idade será 12 anos
     motherName: "Mother",
     fatherName: "Father",
     responsablePhone: "98765432101",
@@ -112,17 +114,20 @@ test("Student category updates as time passes", async ({ expect }) => {
   const response = await request(app).post("/students").send(newStudent);
   expect(response.status).toBe(201);
   expect(response.body.name).toBe(newStudent.name);
-  expect(response.body.category).toBe(24);
+
+  expect(response.body.age).toBe(12);
+  expect(response.body.category).toBe(13);
 
   const studentId = response.body._id;
 
-  const clock = sinon.useFakeTimers(
-    new Date().setFullYear(new Date().getFullYear() + 1)
+  let clock = sinon.useFakeTimers(
+    new Date().setFullYear(new Date().getFullYear() + 2)
   );
 
-  const getResponse = await request(app).get(`/students/${studentId}`);
+  let getResponse = await request(app).get(`/students/${studentId}`);
   expect(getResponse.status).toBe(200);
-  expect(getResponse.body.category).toBe(25);
+  expect(getResponse.body.age).toBe(14);
+  expect(getResponse.body.category).toBe(15);
 
   clock.restore();
 });
@@ -132,7 +137,7 @@ test("Get the students by category", async ({ expect }) => {
 
   const sub17Student = {
     name: "sub 17 Student",
-    birthDate: "01/01/2007",
+    birthDate: "12/01/2008",
     motherName: "Mother",
     fatherName: "Father",
     responsablePhone: "98765432101",
@@ -141,7 +146,7 @@ test("Get the students by category", async ({ expect }) => {
 
   const sub5Student = {
     name: "sub 5 Student",
-    birthDate: "01/01/2019",
+    birthDate: "12/01/2019",
     motherName: "Mother",
     fatherName: "Father",
     responsablePhone: "98765432101",

@@ -17,6 +17,10 @@ const studentSchema = new mongoose.Schema({
         "Invalid date format for birthDate. Please use dd/mm/yyyy format.",
     },
   },
+  age: {
+    type: Number,
+    required: false,
+  },
   motherName: {
     type: String,
     required: true,
@@ -50,19 +54,18 @@ const studentSchema = new mongoose.Schema({
   },
 });
 
-studentSchema.virtual("age").get(function () {
+studentSchema.pre("save", function (next) {
   const birthDate = moment(this.birthDate, "DD/MM/YYYY");
   const now = moment();
-  return now.diff(birthDate, "years");
-});
-
-studentSchema.pre("save", function (next) {
+  this.age = now.diff(birthDate, "years");
   this.category = this.calculateCategory();
-
   next();
 });
 
 studentSchema.methods.updateCategory = function () {
+  const birthDate = moment(this.birthDate, "DD/MM/YYYY");
+  const now = moment();
+  this.age = now.diff(birthDate, "years");
   this.category = this.calculateCategory();
 };
 
