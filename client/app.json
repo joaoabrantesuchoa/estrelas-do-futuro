@@ -10,9 +10,7 @@
       "backgroundColor": "#FFFFFF"
     },
     "icon": "./images/homePageBrasao.png",
-    "plugins": [
-      "expo-router"
-    ],
+    "plugins": ["expo-router"],
     "name": "Estrelas do futuro",
     "slug": "estrelas-do-futuro",
     "extra": {
@@ -26,7 +24,9 @@
     "owner": "stardofuturo",
     "android": {
       "package": "com.stardofuturo.estrelasdofuturo",
-      "versionCode": 1
+      "versionCode": 1,
+      "enableHermes": true,
+      "debug": false
     },
     "ios": {
       "bundleIdentifier": "com.stardofuturo.estrelasdofuturo"
