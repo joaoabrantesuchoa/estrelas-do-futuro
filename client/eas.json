@@ -23,7 +23,9 @@
       "developmentClient": false,
       "android": {
         "buildType": "apk",
-        "gradleCommand": ":app:assembleRelease"
+        "gradleCommand": ":app:assembleRelease",
+        "enableHermes": true,
+        "debug": false
       },
       "env": {
         "EXPO_PUBLIC_API_URL": "https://estrelas-do-futuro.onrender.com"
