@@ -71,23 +71,24 @@ studentSchema.methods.updateCategory = function () {
 
 studentSchema.methods.calculateCategory = function () {
   const age = this.age;
+  const birthYear = moment(this.birthDate, "DD/MM/YYYY").year();
   let category;
 
-  if (age <= 3) {
+  if (birthYear === 2021 || birthYear === 2022) {
     category = 3;
-  } else if (age <= 5) {
+  } else if (birthYear === 2019 || birthYear === 2020) {
     category = 5;
-  } else if (age <= 7) {
+  } else if (birthYear === 2017 || birthYear === 2018) {
     category = 7;
-  } else if (age <= 9) {
+  } else if (birthYear === 2015 || birthYear === 2016) {
     category = 9;
-  } else if (age <= 11) {
+  } else if (birthYear === 2013 || birthYear === 2014) {
     category = 11;
-  } else if (age <= 13) {
+  } else if (birthYear === 2011 || birthYear === 2012) {
     category = 13;
-  } else if (age <= 15) {
+  } else if (birthYear === 2009 || birthYear === 2010) {
     category = 15;
-  } else if (age <= 17) {
+  } else if (birthYear === 2007 || birthYear === 2008) {
     category = 17;
   } else {
     category = age;
