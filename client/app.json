@@ -11,25 +11,25 @@
     },
     "icon": "./images/homePageBrasao.png",
     "plugins": ["expo-router"],
-    "name": "Show de bola",
-    "slug": "show-de-bola",
+    "name": "Escolinha de futebol nossa senhora de lourdes",
+    "slug": "nossa-senhora-de-lourdes",
     "extra": {
       "router": {
         "origin": false
       },
       "eas": {
-        "projectId": "428ba421-5a33-4c31-82f2-d7ceea5845b5"
+        "projectId": "dc8b4f11-377e-478a-89da-17f717db0142"
       }
     },
     "owner": "stardofuturo",
     "android": {
-      "package": "com.stardofuturo.showdebola",
+      "package": "com.stardofuturo.nossasenhoradelourdes",
       "versionCode": 1,
       "enableHermes": true,
       "debug": false
     },
     "ios": {
-      "bundleIdentifier": "com.stardofuturo.showdebola"
+      "bundleIdentifier": "com.stardofuturo.nossasenhoradelourdes"
     }
   }
 }
