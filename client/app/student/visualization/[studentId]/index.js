@@ -61,7 +61,10 @@ function StudentPage() {
           navigation={`student/edit?studentId=${studentId}`}
           name={"Editar"}
         />
-        <Button name={"Comprovantes"} />
+        <Button
+          navigation={`student/payment?studentId=${studentId}`}
+          name={"Comprovantes"}
+        />
       </View>
       <Button
         navigation={`student/evaluation?studentId=${studentId}`}
