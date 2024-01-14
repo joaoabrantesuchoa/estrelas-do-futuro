@@ -11,25 +11,25 @@
     },
     "icon": "./images/homePageBrasao.png",
     "plugins": ["expo-router"],
-    "name": "Estrelas do futuro",
-    "slug": "estrelas-do-futuro",
+    "name": "Show de bola",
+    "slug": "show-de-bola",
     "extra": {
       "router": {
         "origin": false
       },
       "eas": {
-        "projectId": "4b2f6fec-bdb8-46f7-a49c-35c66d5e0728"
+        "projectId": "428ba421-5a33-4c31-82f2-d7ceea5845b5"
       }
     },
     "owner": "stardofuturo",
     "android": {
-      "package": "com.stardofuturo.estrelasdofuturo",
+      "package": "com.stardofuturo.showdebola",
       "versionCode": 1,
       "enableHermes": true,
       "debug": false
     },
     "ios": {
-      "bundleIdentifier": "com.stardofuturo.estrelasdofuturo"
+      "bundleIdentifier": "com.stardofuturo.showdebola"
     }
   }
 }
