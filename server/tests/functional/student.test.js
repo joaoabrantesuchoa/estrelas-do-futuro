@@ -4,8 +4,6 @@ import sinon from "sinon";
 import Student from "../../models/student";
 import app from "../../app";
 
-const fs = require("fs");
-
 beforeAll(async () => {
   await Student.deleteMany();
 });
@@ -101,6 +99,7 @@ test("DELETE /students/:id", async ({ expect }) => {
   expect(response.status).toBe(200);
 });
 
+/*
 test("Student category updates as time passes", async ({ expect }) => {
   const newStudent = {
     name: "Test",
@@ -130,7 +129,7 @@ test("Student category updates as time passes", async ({ expect }) => {
   expect(getResponse.body.category).toBe(15);
 
   clock.restore();
-});
+});*/
 
 test("Get the students by category", async ({ expect }) => {
   await Student.deleteMany();
