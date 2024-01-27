@@ -24,9 +24,7 @@
     "owner": "stardofuturo",
     "android": {
       "package": "com.stardofuturo.estrelasdofuturo",
-      "versionCode": 1,
-      "enableHermes": true,
-      "debug": false
+      "versionCode": 1
     },
     "ios": {
       "bundleIdentifier": "com.stardofuturo.estrelasdofuturo"

@@ -1,9 +1,9 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import BackArrow from "../../components/backArrow";
-import Icon from "../../components/icon";
-import Button from "../../components/button";
+import BackArrow from "../../../components/backArrow";
+import Icon from "../../../components/icon";
+import Button from "../../../components/button";
 import ButtonAdd from "./components/buttonAdd";
-import { getStudentById } from "../../../api";
+import { getStudentById } from "../../../../api";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState, useCallback } from "react";
 import { styles } from "./styles";
