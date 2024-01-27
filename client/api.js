@@ -62,6 +62,6 @@ export async function deletedStudentById(studentId) {
     const response = await axios.delete(url);
     return response.data;
   } catch (error) {
-    console.error("Erro ao cadastrar um novo estudante", error);
+    console.error("Erro ao deletar um estudante", error);
   }
 }
