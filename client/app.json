@@ -11,25 +11,23 @@
     },
     "icon": "./images/homePageBrasao.png",
     "plugins": ["expo-router"],
-    "name": "Escolinha de futebol nossa senhora de lourdes",
-    "slug": "nossa-senhora-de-lourdes",
+    "name": "Estrelas do futuro",
+    "slug": "estrelas-do-futuro",
     "extra": {
       "router": {
         "origin": false
       },
       "eas": {
-        "projectId": "dc8b4f11-377e-478a-89da-17f717db0142"
+        "projectId": "4b2f6fec-bdb8-46f7-a49c-35c66d5e0728"
       }
     },
     "owner": "stardofuturo",
     "android": {
-      "package": "com.stardofuturo.nossasenhoradelourdes",
-      "versionCode": 1,
-      "enableHermes": true,
-      "debug": false
+      "package": "com.stardofuturo.estrelasdofuturo",
+      "versionCode": 1
     },
     "ios": {
-      "bundleIdentifier": "com.stardofuturo.nossasenhoradelourdes"
+      "bundleIdentifier": "com.stardofuturo.estrelasdofuturo"
     }
   }
 }
