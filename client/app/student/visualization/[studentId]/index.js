@@ -130,7 +130,10 @@ function StudentPage() {
         >
           <Text styles={styles.buttonText}>{"Deletar"}</Text>
         </TouchableOpacity>
-        <Button name={"Comprovantes"} />
+        <Button
+          navigation={`student/payment?studentId=${studentId}`}
+          name={"Comprovantes"}
+        />
       </View>
       <Button
         navigation={`student/evaluation?studentId=${studentId}`}
