@@ -39,7 +39,7 @@ function StudentPage() {
           onPress: async () => {
             try {
               await deletedStudentById(studentId);
-              router.replace('/')
+              router.replace("/");
             } catch (error) {
               console.log(error);
             }

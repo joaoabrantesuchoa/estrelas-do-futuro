@@ -1,13 +1,13 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import BackArrow from "../../components/backArrow";
-import Button from "./components/button";
-import ArrowLeft from "../../../images/ArrowLeft.png";
-import ArrowRight from "../../../images/ArrowRight.png";
+import BackArrow from "../../../components/backArrow";
+import ArrowLeft from "../../../../images/ArrowLeft.png"
+import ArrowRight from "../../../../images/ArrowRight.png";
 import { useLocalSearchParams } from "expo-router";
 import { Text, TouchableOpacity, Image, View } from "react-native";
 import { styles } from "./styles";
-import Icon from "../../components/icon";
+import Icon from "../../../components/icon";
 import { useEffect, useState, useCallback } from "react";
+import Button from "../../../components/button";
 
 function payment() {
   const { studentId } = useLocalSearchParams();

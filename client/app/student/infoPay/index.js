@@ -2,7 +2,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text } from "react-native";
 import BackArrow from "../../components/backArrow";
 import Icon from "../../components/icon";
-import ButtonAdd from "../evaluation/components/buttonAdd";
+import ButtonAdd from "../evaluation/[studentId]/components/buttonAdd";
 import Button from "../../components/button";
 import { styles } from "./styles";
 
