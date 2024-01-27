@@ -130,13 +130,14 @@ function StudentPage() {
         >
           <Text styles={styles.buttonText}>{"Deletar"}</Text>
         </TouchableOpacity>
+
         <Button
-          navigation={`student/payment?studentId=${studentId}`}
+          navigation={`student/payment/${studentId}`}
           name={"Comprovantes"}
         />
       </View>
       <Button
-        navigation={`student/evaluation?studentId=${studentId}`}
+        navigation={`student/evaluation/${studentId}`}
         name={"Ficha de avaliação"}
       />
     </SafeAreaView>
