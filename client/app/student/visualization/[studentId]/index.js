@@ -116,6 +116,11 @@ function StudentPage() {
         </View>
       </View>
 
+      <Button
+        navigation={`student/evaluation/${studentId}`}
+        name={"Ficha de avaliação"}
+      />
+
       <View style={styles.buttonRow}>
         <Button
           navigation={`student/edit?studentId=${studentId}`}
@@ -136,10 +141,6 @@ function StudentPage() {
           name={"Comprovantes"}
         />
       </View>
-      <Button
-        navigation={`student/evaluation/${studentId}`}
-        name={"Ficha de avaliação"}
-      />
     </SafeAreaView>
   );
 }
