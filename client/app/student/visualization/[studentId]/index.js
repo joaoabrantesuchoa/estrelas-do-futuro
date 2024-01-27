@@ -1,14 +1,16 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getStudentById } from "../../../../api";
-import { useLocalSearchParams } from "expo-router";
-import { Text, Image, View } from "react-native";
+import { deletedStudentById, getStudentById } from "../../../../api";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { Text, Image, View, TouchableOpacity } from "react-native";
 import { useEffect, useState, useCallback } from "react";
 import { styles } from "./styles";
 import BackArrow from "../../../components/backArrow";
 import Button from "../../../components/button";
+import { Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
 function StudentPage() {
+  const router = useRouter();
   const { studentId } = useLocalSearchParams();
   const [studentData, setStudentData] = useState({});
   const [profileImage, setProfileImage] = useState("");
@@ -20,6 +22,31 @@ function StudentPage() {
     } catch (error) {
       console.error(error);
     }
+  }, []);
+
+  const deleteStudent = useCallback(async () => {
+    Alert.alert(
+      "Deletar Aluno",
+      "Você tem certeza que deseja deletar este aluno?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: async () => {
+            try {
+              await deletedStudentById(studentId);
+              router.replace('/')
+            } catch (error) {
+              console.log(error);
+            }
+          },
+        },
+      ]
+    );
   }, []);
 
   const openImageLibrary = async () => {
@@ -94,6 +121,15 @@ function StudentPage() {
           navigation={`student/edit?studentId=${studentId}`}
           name={"Editar"}
         />
+
+        <TouchableOpacity
+          onPress={async () => {
+            await deleteStudent();
+          }}
+          style={styles.button}
+        >
+          <Text styles={styles.buttonText}>{"Deletar"}</Text>
+        </TouchableOpacity>
         <Button name={"Comprovantes"} />
       </View>
       <Button
