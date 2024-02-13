@@ -40,7 +40,6 @@ function StudentList() {
     return (
       <StudentIcon
         studentName={item.name}
-        studentImage={item.photoUrl}
         studentId={item._id}
       />
     );
