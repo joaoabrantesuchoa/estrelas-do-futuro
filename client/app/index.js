@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { View, ActivityIndicator, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import HomePage from "./homePage/index.js";
 import { Text } from "react-native";
@@ -16,7 +17,10 @@ const Home = () => {
   if (isLoading) {
     return (
       <SafeAreaProvider>
-        <Text>Carregando...</Text>
+        <View style={styles.container}>
+          <Text style={styles.text}>Carregando...</Text>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
       </SafeAreaProvider>
     );
   }
@@ -27,5 +31,16 @@ const Home = () => {
     </SafeAreaProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+});
 
 export default Home;

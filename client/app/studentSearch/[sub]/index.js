@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { View, TextInput, FlatList, RefreshControl } from "react-native";
+import { View, TextInput, FlatList, RefreshControl, ActivityIndicator } from "react-native";
 import { fetchStudents } from "../../../api";
 import { styles } from "./styles";
 import { useLocalSearchParams } from "expo-router";
@@ -14,12 +14,15 @@ function StudentList() {
   const [searchText, setSearchText] = useState("");
   const [studentsData, setStudentsData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const fetchStudentsData = useCallback(async () => {
+    setLoading(true);
     setRefreshing(true);
     const data = await fetchStudents(sub);
     setStudentsData(data);
     setRefreshing(false);
+    setLoading(false);
   }, []);
 
   const filteredStudentsData = useMemo(() => {
@@ -37,12 +40,7 @@ function StudentList() {
   }, [fetchStudentsData]);
 
   const renderItem = ({ item }) => {
-    return (
-      <StudentIcon
-        studentName={item.name}
-        studentId={item._id}
-      />
-    );
+    return <StudentIcon studentName={item.name} studentId={item._id} />;
   };
 
   return (
@@ -59,18 +57,22 @@ function StudentList() {
           keyboardType="default"
         />
 
-        <FlatList
-          style={styles.studentIconList}
-          data={filteredStudentsData}
-          renderItem={renderItem}
-          keyExtractor={(item) => item._id}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={fetchStudentsData}
-            />
-          }
-        />
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <FlatList
+            style={styles.studentIconList}
+            data={filteredStudentsData}
+            renderItem={renderItem}
+            keyExtractor={(item) => item._id}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={fetchStudentsData}
+              />
+            }
+          />
+        )}
         <Button name={"Adicionar aluno"} navigation={"/student/create"} />
       </View>
     </SafeAreaView>
