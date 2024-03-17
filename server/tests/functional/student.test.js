@@ -99,38 +99,6 @@ test("DELETE /students/:id", async ({ expect }) => {
   expect(response.status).toBe(200);
 });
 
-/*
-test("Student category updates as time passes", async ({ expect }) => {
-  const newStudent = {
-    name: "Test",
-    birthDate: "12/01/2012", // A idade será 12 anos
-    motherName: "Mother",
-    fatherName: "Father",
-    responsablePhone: "98765432101",
-    medicalObservations: "None",
-  };
-
-  const response = await request(app).post("/students").send(newStudent);
-  expect(response.status).toBe(201);
-  expect(response.body.name).toBe(newStudent.name);
-
-  expect(response.body.age).toBe(12);
-  expect(response.body.category).toBe(13);
-
-  const studentId = response.body._id;
-
-  let clock = sinon.useFakeTimers(
-    new Date().setFullYear(new Date().getFullYear() + 2)
-  );
-
-  let getResponse = await request(app).get(`/students/${studentId}`);
-  expect(getResponse.status).toBe(200);
-  expect(getResponse.body.age).toBe(14);
-  expect(getResponse.body.category).toBe(15);
-
-  clock.restore();
-});*/
-
 test("Get the students by category", async ({ expect }) => {
   await Student.deleteMany();
 
@@ -259,4 +227,92 @@ test("PUT - change only the specified elements", async ({ expect }) => {
   expect(response.body.responsablePhone).toBe(student.responsablePhone);
   expect(response.body.medicalObservations).toBe(student.medicalObservations);
   expect(response.body.photo).toBe(undefined);
+});
+
+test("GET /students/:id/payments/:year - add a payment and then get payments for a student by year", async ({
+  expect,
+}) => {
+  // Primeiro, criar um novo estudante
+  const newStudent = {
+    name: "Payment Test Student",
+    birthDate: "01/01/2005",
+    motherName: "Mother",
+    fatherName: "Father",
+    responsablePhone: "98765432101",
+    medicalObservations: "None",
+  };
+
+  const studentCreationResponse = await request(app)
+    .post("/students")
+    .send(newStudent);
+  expect(studentCreationResponse.status).toBe(201);
+  const studentId = studentCreationResponse.body._id;
+
+  const year = 2024;
+  const firstMonth = 1;
+
+  let paymentData = {
+    paid: true,
+    paidBy: "Parent",
+    amount: 100,
+    paymentType: "Boleto",
+  };
+
+  let paymentAddResponse = await request(app)
+    .put(`/students/${studentId}/payments/${year}/${firstMonth}`)
+    .send(paymentData);
+  expect(paymentAddResponse.status).toBe(201);
+
+  const secondMonth = 2;
+
+  paymentData = {
+    paid: true,
+    paidBy: "Parent",
+    amount: 100,
+    paymentType: "Boleto",
+  };
+
+  paymentAddResponse = await request(app)
+    .put(`/students/${studentId}/payments/${year}/${secondMonth}`)
+    .send(paymentData);
+  expect(paymentAddResponse.status).toBe(201);
+
+  const paymentsGetResponse = await request(app).get(
+    `/students/${studentId}/payments/${year}`
+  );
+  expect(paymentsGetResponse.status).toBe(200);
+  const paymentsData = paymentsGetResponse.body;
+
+  expect(paymentsData).toBeDefined();
+  expect(paymentsData.length).toBeGreaterThanOrEqual(2); // Verifica se ao menos dois pagamentos foram registrados
+
+  // Verifica os detalhes do primeiro pagamento
+  const firstMonthPayment = paymentsData.find(
+    (payment) => payment.month === 1 && payment.year === year
+  );
+  expect(firstMonthPayment).toBeDefined();
+  expect(firstMonthPayment.paid).toBe(true);
+  expect(firstMonthPayment.paidBy).toBe("Parent");
+  expect(firstMonthPayment.amount).toBe(100);
+  expect(firstMonthPayment.paymentType).toBe("Boleto");
+
+  // A data de pagamento pode variar, então verifique se é um valor válido em vez de comparar diretamente
+  expect(new Date(firstMonthPayment.date)).toEqual(
+    new Date(`${year}-01-01T03:00:00.000Z`)
+  );
+
+  // Verifica os detalhes do segundo pagamento
+  const secondMonthPayment = paymentsData.find(
+    (payment) => payment.month === 2 && payment.year === year
+  );
+  expect(secondMonthPayment).toBeDefined();
+  expect(secondMonthPayment.paid).toBe(true);
+  expect(secondMonthPayment.paidBy).toBe("Parent");
+  expect(secondMonthPayment.amount).toBe(100);
+  expect(secondMonthPayment.paymentType).toBe("Boleto");
+
+  // Similarmente, verifica se a data do segundo pagamento é válida
+  expect(new Date(secondMonthPayment.date)).toEqual(
+    new Date(`${year}-02-01T03:00:00.000Z`)
+  );
 });

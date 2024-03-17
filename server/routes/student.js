@@ -1,5 +1,6 @@
 import express from "express";
 import Student from "../models/student.js";
+import Payment from "../models/payment.js";
 import fs from "fs";
 import multer from "multer";
 
@@ -194,6 +195,88 @@ router.delete("/:id", async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(500).send({ message: error.message });
+  }
+});
+
+// Rota para pegar os pagamentos de um estudante por ano
+router.get("/:id/payments/:year", async (req, res) => {
+  const { id, year } = req.params;
+  try {
+    const student = await Student.findById(req.params.id);
+
+    if (!student) {
+      return res.status(404).send({ message: "Student not found" });
+    }
+
+    const startOfYear = new Date(year, 0, 1); // Primeiro dia do ano especificado
+    const endOfYear = new Date(year, 11, 31); // Último dia do ano especificado
+
+    const payments = await Payment.find({
+      studentId: id,
+      date: { $gte: startOfYear, $lte: endOfYear },
+    }).sort({ date: 1 }); // Ordena os pagamentos pela data
+
+    if (payments.length === 0) {
+      return res
+        .status(404)
+        .send({ message: "No payments found for this year" });
+    }
+
+    return res.status(200).send(payments);
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).send({ message: error.message });
+  }
+});
+
+router.put("/:id/payments/:year/:month", async (req, res) => {
+  const { id, year, month } = req.params;
+  const { paid, paidBy, amount, paymentType } = req.body;
+
+  try {
+    const student = await Student.findById(req.params.id);
+
+    if (!student) {
+      return res.status(404).send({ message: "Student not found" });
+    }
+
+    const paymentDate = new Date(year, month - 1); // O mês no objeto Date começa do 0 (Janeiro)
+
+    let payment = await Payment.findOne({
+      studentId: id,
+      date: {
+        $gte: new Date(year, month - 1, 1),
+        $lt: new Date(year, month, 0),
+      },
+    });
+
+    if (payment) {
+      payment.paid = paid;
+      payment.paidBy = paidBy;
+      payment.amount = amount;
+      payment.paymentType = paymentType;
+    } else {
+      payment = new Payment({
+        studentId: id,
+        year: year,
+        month: month,
+        date: paymentDate,
+        paid,
+        paidBy,
+        amount,
+        paymentType,
+      });
+    }
+
+    await payment.save();
+
+    console.log({ payment });
+    return res
+      .status(201)
+      .send({ message: "Payment recorded successfully", payment });
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).send({ message: error.message });
   }
 });
 
