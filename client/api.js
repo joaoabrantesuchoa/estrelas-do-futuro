@@ -65,3 +65,31 @@ export async function deletedStudentById(studentId) {
     console.error("Erro ao deletar um estudante", error);
   }
 }
+
+export async function fetchPaymentsByYear(studentId, year) {
+  try {
+    const url = `${process.env.EXPO_PUBLIC_API_URL}/students/${studentId}/payments/${year}`;
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Erro ao buscar pagamentos do ano ${year} para o estudante com ID ${studentId}:`,
+      error
+    );
+
+    throw error;
+  }
+}
+
+export async function addPaymentForMonth(studentId, year, month, paymentData) {
+  try {
+    let url = `${process.env.EXPO_PUBLIC_API_URL}/students/${studentId}/payments/${year}/${month}`;
+    const response = await axios.post(url, paymentData);
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Erro ao adicionar pagamento para o estudante com ID ${studentId}:`,
+      error
+    );
+  }
+}

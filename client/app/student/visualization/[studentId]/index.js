@@ -137,7 +137,7 @@ function StudentPage() {
         </TouchableOpacity>
 
         <Button
-          navigation={`student/payment/${studentId}`}
+          navigation={`student/visualization/${studentId}/payment`}
           name={"Comprovantes"}
         />
       </View>
