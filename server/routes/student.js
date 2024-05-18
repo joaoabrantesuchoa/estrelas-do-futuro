@@ -203,13 +203,11 @@ router.get("/:id/payments/:year/:month", async (req, res) => {
   try {
     const student = await Student.findById(id);
 
-    console.log({id, year, month})
-
     if (!student) {
       return res.status(404).send({ message: "Student not found" });
     }
 
-    const payments = await Payment.find({
+    const payments = await Payment.findOne({
       studentId: id,
       year: year,
       month: month, // Adiciona o filtro por mês
