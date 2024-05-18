@@ -372,8 +372,8 @@ test("GET /students/:id/payments/:year/:month - add a payment and then get payme
     `/students/${studentId}/payments/${year}/${firstMonth}`
   );
   expect(firstMonthGetResponse.status).toBe(200);
-  expect(firstMonthGetResponse.body.length).toBe(1);
-  const firstPaymentDetails = firstMonthGetResponse.body[0];
+
+  const firstPaymentDetails = firstMonthGetResponse.body;
   expect(firstPaymentDetails.paid).toBe(true);
   expect(firstPaymentDetails.paidBy).toBe("Parent");
   expect(firstPaymentDetails.amount).toBe(100);
@@ -384,8 +384,8 @@ test("GET /students/:id/payments/:year/:month - add a payment and then get payme
     `/students/${studentId}/payments/${year}/${secondMonth}`
   );
   expect(secondMonthGetResponse.status).toBe(200);
-  expect(secondMonthGetResponse.body.length).toBe(1);
-  const secondPaymentDetails = secondMonthGetResponse.body[0];
+
+  const secondPaymentDetails = secondMonthGetResponse.body;
   expect(secondPaymentDetails.paid).toBe(true);
   expect(secondPaymentDetails.paidBy).toBe("Parent");
   expect(secondPaymentDetails.amount).toBe(100);
