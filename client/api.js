@@ -81,14 +81,35 @@ export async function fetchPaymentsByYear(studentId, year) {
   }
 }
 
-export async function addPaymentForMonth(studentId, year, month, paymentData) {
+export async function fetchPaymentInformationByYearAndMonth(
+  studentId,
+  year,
+  month
+) {
   try {
-    let url = `${process.env.EXPO_PUBLIC_API_URL}/students/${studentId}/payments/${year}/${month}`;
-    const response = await axios.post(url, paymentData);
+    const url = `${process.env.EXPO_PUBLIC_API_URL}/students/${studentId}/payments/${year}/${month}`;
+    const response = await axios.get(url);
     return response.data;
   } catch (error) {
     console.error(
-      `Erro ao adicionar pagamento para o estudante com ID ${studentId}:`,
+      `Erro ao buscar pagamentos do ano ${year} e mês ${month} para o estudante com ID ${studentId}:`,
+      error
+    );
+
+    throw error;
+  }
+}
+
+export async function addPaymentForMonth(studentId, year, month, paymentData) {
+  try {
+    console.log({ studentId, year, month, paymentData });
+
+    let url = `${process.env.EXPO_PUBLIC_API_URL}/students/${studentId}/payments/${year}/${month}`;
+    const response = await axios.put(url, paymentData);
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Erro ao adicionar pagamento para o estudante com ID ${studentId}, ano ${year}, mês ${month} e informações de pagamento ${paymentData}`,
       error
     );
   }
