@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import moment from "moment";
 
 const paymentSchema = new mongoose.Schema(
   {
@@ -23,8 +24,15 @@ const paymentSchema = new mongoose.Schema(
       },
     },
     date: {
-      type: Date,
+      type: String,
       required: true,
+      validate: {
+        validator: function (value) {
+          return moment(value, "DD/MM/YYYY", true).isValid();
+        },
+        message:
+          "Invalid date format for birthDate. Please use dd/mm/yyyy format.",
+      },
     },
     paid: {
       type: Boolean,

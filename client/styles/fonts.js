@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const textStyles = StyleSheet.create({
   buttonText: {
     color: "#000",
-    fontSize: 20,
+    fontSize: 15,
     fontStyle: "normal",
     fontWeight: "700",
   },

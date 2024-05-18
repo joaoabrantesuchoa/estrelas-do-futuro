@@ -254,8 +254,9 @@ test("GET /students/:id/payments/:year - add a payment and then get payments for
   let paymentData = {
     paid: true,
     paidBy: "Parent",
-    amount: 100,
     paymentType: "Boleto",
+    amount: 100,
+    paymentDate: "01/01/2005",
   };
 
   let paymentAddResponse = await request(app)
@@ -268,8 +269,9 @@ test("GET /students/:id/payments/:year - add a payment and then get payments for
   paymentData = {
     paid: true,
     paidBy: "Parent",
-    amount: 100,
     paymentType: "Boleto",
+    amount: 100,
+    paymentDate: "01/02/2005",
   };
 
   paymentAddResponse = await request(app)
@@ -295,11 +297,7 @@ test("GET /students/:id/payments/:year - add a payment and then get payments for
   expect(firstMonthPayment.paidBy).toBe("Parent");
   expect(firstMonthPayment.amount).toBe(100);
   expect(firstMonthPayment.paymentType).toBe("Boleto");
-
-  // A data de pagamento pode variar, então verifique se é um valor válido em vez de comparar diretamente
-  expect(new Date(firstMonthPayment.date)).toEqual(
-    new Date(`${year}-01-01T03:00:00.000Z`)
-  );
+  expect(firstMonthPayment.date).toBe("01/01/2005");
 
   // Verifica os detalhes do segundo pagamento
   const secondMonthPayment = paymentsData.find(
@@ -310,9 +308,87 @@ test("GET /students/:id/payments/:year - add a payment and then get payments for
   expect(secondMonthPayment.paidBy).toBe("Parent");
   expect(secondMonthPayment.amount).toBe(100);
   expect(secondMonthPayment.paymentType).toBe("Boleto");
+  expect(secondMonthPayment.date).toBe("01/02/2005");
+});
 
-  // Similarmente, verifica se a data do segundo pagamento é válida
-  expect(new Date(secondMonthPayment.date)).toEqual(
-    new Date(`${year}-02-01T03:00:00.000Z`)
+test("GET /students/:id/payments/:year/:month - add a payment and then get payments for a student by year and month", async ({
+  expect,
+}) => {
+  // Primeiro, criar um novo estudante
+  const newStudent = {
+    name: "Payment Test Student",
+    birthDate: "01/01/2005",
+    motherName: "Mother",
+    fatherName: "Father",
+    responsablePhone: "98765432101",
+    medicalObservations: "None",
+  };
+
+  const studentCreationResponse = await request(app)
+    .post("/students")
+    .send(newStudent);
+  expect(studentCreationResponse.status).toBe(201);
+
+  const studentId = studentCreationResponse.body._id;
+  const year = 2024;
+  const firstMonth = 1;
+
+  let paymentData = {
+    paid: true,
+    paidBy: "Parent",
+    paymentType: "Boleto",
+    amount: 100,
+    paymentDate: "01/01/2024",
+  };
+
+  let paymentAddResponse = await request(app)
+    .put(`/students/${studentId}/payments/${year}/${firstMonth}`)
+    .send(paymentData);
+  expect(paymentAddResponse.status).toBe(201);
+
+  const secondMonth = 2;
+  paymentData = {
+    paid: true,
+    paidBy: "Parent",
+    paymentType: "Boleto",
+    amount: 100,
+    paymentDate: "01/02/2024",
+  };
+
+  paymentAddResponse = await request(app)
+    .put(`/students/${studentId}/payments/${year}/${secondMonth}`)
+    .send(paymentData);
+  expect(paymentAddResponse.status).toBe(201);
+
+  // Testa a rota que pega pagamentos por ano
+  const paymentsGetResponse = await request(app).get(
+    `/students/${studentId}/payments/${year}`
   );
+  expect(paymentsGetResponse.status).toBe(200);
+  expect(paymentsGetResponse.body.length).toBeGreaterThanOrEqual(2); // Verifica se ao menos dois pagamentos foram registrados
+
+  // Testa a rota que pega pagamentos por ano e mês
+  const firstMonthGetResponse = await request(app).get(
+    `/students/${studentId}/payments/${year}/${firstMonth}`
+  );
+  expect(firstMonthGetResponse.status).toBe(200);
+  expect(firstMonthGetResponse.body.length).toBe(1);
+  const firstPaymentDetails = firstMonthGetResponse.body[0];
+  expect(firstPaymentDetails.paid).toBe(true);
+  expect(firstPaymentDetails.paidBy).toBe("Parent");
+  expect(firstPaymentDetails.amount).toBe(100);
+  expect(firstPaymentDetails.paymentType).toBe("Boleto");
+  expect(firstPaymentDetails.date).toBe("01/01/2024");
+
+  const secondMonthGetResponse = await request(app).get(
+    `/students/${studentId}/payments/${year}/${secondMonth}`
+  );
+  expect(secondMonthGetResponse.status).toBe(200);
+  expect(secondMonthGetResponse.body.length).toBe(1);
+  const secondPaymentDetails = secondMonthGetResponse.body[0];
+  expect(secondPaymentDetails.paid).toBe(true);
+  expect(secondPaymentDetails.paidBy).toBe("Parent");
+  expect(secondPaymentDetails.amount).toBe(100);
+  expect(secondPaymentDetails.paymentType).toBe("Boleto");
+  expect(secondPaymentDetails.date).toBe("01/02/2024");
 });

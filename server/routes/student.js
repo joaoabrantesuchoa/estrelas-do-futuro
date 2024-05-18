@@ -198,6 +198,30 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.get("/:id/payments/:year/:month", async (req, res) => {
+  const { id, year, month } = req.params;
+  try {
+    const student = await Student.findById(id);
+
+    console.log({id, year, month})
+
+    if (!student) {
+      return res.status(404).send({ message: "Student not found" });
+    }
+
+    const payments = await Payment.find({
+      studentId: id,
+      year: year,
+      month: month, // Adiciona o filtro por mês
+    }).sort({ date: 1 }); // Ordena os pagamentos pela data dentro do mês
+
+    return res.status(200).send(payments);
+  } catch (error) {
+    console.error(error.message);
+    return res.status(500).send({ message: error.message });
+  }
+});
+
 // Rota para pegar os pagamentos de um estudante por ano
 router.get("/:id/payments/:year", async (req, res) => {
   const { id, year } = req.params;
@@ -208,19 +232,10 @@ router.get("/:id/payments/:year", async (req, res) => {
       return res.status(404).send({ message: "Student not found" });
     }
 
-    const startOfYear = new Date(year, 0, 1); // Primeiro dia do ano especificado
-    const endOfYear = new Date(year, 11, 31); // Último dia do ano especificado
-
     const payments = await Payment.find({
       studentId: id,
-      date: { $gte: startOfYear, $lte: endOfYear },
-    }).sort({ date: 1 }); // Ordena os pagamentos pela data
-
-    if (payments.length === 0) {
-      return res
-        .status(404)
-        .send({ message: "No payments found for this year" });
-    }
+      year: year,
+    }).sort({ month: 1 });
 
     return res.status(200).send(payments);
   } catch (error) {
@@ -229,9 +244,10 @@ router.get("/:id/payments/:year", async (req, res) => {
   }
 });
 
+//Rota para realizar os pagamento de um estudante no mês e no ano escolhido.
 router.put("/:id/payments/:year/:month", async (req, res) => {
   const { id, year, month } = req.params;
-  const { paid, paidBy, amount, paymentType } = req.body;
+  const { paid, paidBy, amount, paymentType, paymentDate } = req.body;
 
   try {
     const student = await Student.findById(req.params.id);
@@ -240,21 +256,18 @@ router.put("/:id/payments/:year/:month", async (req, res) => {
       return res.status(404).send({ message: "Student not found" });
     }
 
-    const paymentDate = new Date(year, month - 1); // O mês no objeto Date começa do 0 (Janeiro)
-
     let payment = await Payment.findOne({
       studentId: id,
-      date: {
-        $gte: new Date(year, month - 1, 1),
-        $lt: new Date(year, month, 0),
-      },
-    });
+      year: year,
+      month: month,
+    }).sort({ date: 1 });
 
     if (payment) {
       payment.paid = paid;
       payment.paidBy = paidBy;
       payment.amount = amount;
       payment.paymentType = paymentType;
+      payment.date = paymentDate;
     } else {
       payment = new Payment({
         studentId: id,
@@ -270,7 +283,6 @@ router.put("/:id/payments/:year/:month", async (req, res) => {
 
     await payment.save();
 
-    console.log({ payment });
     return res
       .status(201)
       .send({ message: "Payment recorded successfully", payment });

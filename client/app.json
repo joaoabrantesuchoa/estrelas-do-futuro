@@ -5,11 +5,11 @@
       "bundler": "metro"
     },
     "splash": {
-      "image": "./images/homePageBrasao.png",
+      "image": "./assets/images/homePageBrasao.png",
       "resizeMode": "contain",
       "backgroundColor": "#FFFFFF"
     },
-    "icon": "./images/homePageBrasao.png",
+    "icon": "./assets/images/homePageBrasao.png",
     "plugins": ["expo-router"],
     "name": "Estrelas do futuro",
     "slug": "estrelas-do-futuro",
