@@ -4,7 +4,8 @@ export const styles = StyleSheet.create({
   container: {
     alignContent: "center",
     justifyContent: "center",
-    padding: 40,
+    alignItems: 'center',
+    padding: 10,
   },
   button: {
     width: 100,
@@ -22,15 +23,17 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
+    paddingBottom: 5,
   },
 
   monthList: {
     maxWidth: "auto",
-    maxHeight: "80%",
-    marginBottom: 10,
+    maxHeight: 'auto',
+    marginBottom: 4,
   },
   text: {
-    fontSize: 10,
+    alignContent: "center",
+    fontSize: 25,
     fontWeight: "bold",
   },
 });
