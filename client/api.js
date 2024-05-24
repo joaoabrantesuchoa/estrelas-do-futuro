@@ -102,8 +102,6 @@ export async function fetchPaymentInformationByYearAndMonth(
 
 export async function addPaymentForMonth(studentId, year, month, paymentData) {
   try {
-    console.log({ studentId, year, month, paymentData });
-
     let url = `${process.env.EXPO_PUBLIC_API_URL}/students/${studentId}/payments/${year}/${month}`;
     const response = await axios.put(url, paymentData);
     return response.data;

@@ -54,47 +54,60 @@ const studentSchema = new mongoose.Schema({
   },
 });
 
+studentSchema.statics.determineCategory = function (age, birthYear) {
+  if (birthYear === 2021 || birthYear === 2022) {
+    return 3;
+  } else if (birthYear === 2019 || birthYear === 2020) {
+    return 5;
+  } else if (birthYear === 2017 || birthYear === 2018) {
+    return 7;
+  } else if (birthYear === 2015 || birthYear === 2016) {
+    return 9;
+  } else if (birthYear === 2013 || birthYear === 2014) {
+    return 11;
+  } else if (birthYear === 2011 || birthYear === 2012) {
+    return 13;
+  } else if (birthYear === 2009 || birthYear === 2010) {
+    return 15;
+  } else if (birthYear === 2007 || birthYear === 2008) {
+    return 17;
+  } else {
+    return age;
+  }
+};
+
+const updateAgeAndCategory = (student) => {
+  const birthDate = moment(student.birthDate, "DD/MM/YYYY");
+  student.age = moment().diff(birthDate, "years");
+  student.category = studentSchema.statics.determineCategory(
+    student.age,
+    birthDate.year()
+  );
+};
+
 studentSchema.pre("save", function (next) {
-  const birthDate = moment(this.birthDate, "DD/MM/YYYY");
-  const now = moment();
-  this.age = now.diff(birthDate, "years");
-  this.category = this.calculateCategory();
+  updateAgeAndCategory(this);
   next();
 });
 
-studentSchema.methods.updateCategory = function () {
-  const birthDate = moment(this.birthDate, "DD/MM/YYYY");
-  const now = moment();
-  this.age = now.diff(birthDate, "years");
-  this.category = this.calculateCategory();
-};
-
-studentSchema.methods.calculateCategory = function () {
-  const age = this.age;
-  const birthYear = moment(this.birthDate, "DD/MM/YYYY").year();
-  let category;
-
-  if (birthYear === 2021 || birthYear === 2022) {
-    category = 3;
-  } else if (birthYear === 2019 || birthYear === 2020) {
-    category = 5;
-  } else if (birthYear === 2017 || birthYear === 2018) {
-    category = 7;
-  } else if (birthYear === 2015 || birthYear === 2016) {
-    category = 9;
-  } else if (birthYear === 2013 || birthYear === 2014) {
-    category = 11;
-  } else if (birthYear === 2011 || birthYear === 2012) {
-    category = 13;
-  } else if (birthYear === 2009 || birthYear === 2010) {
-    category = 15;
-  } else if (birthYear === 2007 || birthYear === 2008) {
-    category = 17;
-  } else {
-    category = age;
+studentSchema.pre(
+  ["updateOne", "findOneAndUpdate", "findByIdAndUpdate", "findById"],
+  async function (next) {
+    const update = this.getUpdate();
+    if (update.birthDate) {
+      const birthDate = moment(update.birthDate, "DD/MM/YYYY");
+      update.age = moment().diff(birthDate, "years");
+      update.category = studentSchema.statics.determineCategory(
+        update.age,
+        birthDate.year()
+      );
+    }
+    next();
   }
+);
 
-  return category;
+studentSchema.methods.updateAgeAndCategory = function () {
+  updateAgeAndCategory(this);
 };
 
 const Student = mongoose.model("Student", studentSchema);
