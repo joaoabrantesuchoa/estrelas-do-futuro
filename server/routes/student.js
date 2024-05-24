@@ -77,7 +77,6 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const student = await Student.findById(req.params.id);
-    student.updateCategory();
     if (!student) {
       return res.status(404).send({ message: "Student not found" });
     }

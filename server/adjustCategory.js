@@ -7,8 +7,6 @@ async function seedStudents() {
 
   const students = await Student.find();
 
-  console.log(students.length);
-
   try {
     for (let student of students) {
       const birthYear = moment(student.birthDate, "DD/MM/YYYY").year();
