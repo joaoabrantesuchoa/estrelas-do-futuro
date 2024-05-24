@@ -5,12 +5,15 @@ import { View, Alert, TouchableOpacity, Text } from "react-native";
 import { useState, useCallback, useEffect } from "react";
 import { styles } from "./styles";
 import { addPaymentForMonth } from "../../../../../../api";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { fetchPaymentInformationByYearAndMonth } from "../../../../../../api";
 
 function PaymentConfirmation() {
+  const router = useRouter();
   const { studentId } = useLocalSearchParams();
   const { year, month, monthNumber } = useLocalSearchParams();
+
+  const [paymentData, setPaymentData] = useState({});
 
   const [payerName, setPayerName] = useState("");
   const [paymentDate, setPaymentDate] = useState("");
@@ -28,10 +31,7 @@ function PaymentConfirmation() {
       year,
       monthNumber
     );
-    setPayerName(paymentData.name);
-    setPaymentDate(paymentData.paymentDate);
-    setAmountPaid(paymentData.amount);
-    setPaymentType(paymentData.paymentType);
+    setPaymentData(paymentData);
   }, []);
 
   useEffect(() => {
@@ -40,7 +40,25 @@ function PaymentConfirmation() {
     };
 
     fetchData();
-  }, [fetchPaymentData]);
+  }, [fetchPaymentData, studentId, month, year]);
+
+  useEffect(() => {
+    if (paymentData.paidBy) {
+      setPayerName(paymentData.paidBy);
+    }
+
+    if (paymentData.date) {
+      setPaymentDate(paymentData.date);
+    }
+
+    if (paymentData.amount) {
+      setAmountPaid(paymentData.amount.toString());
+    }
+
+    if (paymentData.paymentType) {
+      setPaymentType(paymentData.paymentType);
+    }
+  }, [paymentData]);
 
   const handleInputChange = useCallback(
     (setter, setError) => (text) => {
@@ -60,9 +78,15 @@ function PaymentConfirmation() {
     if (!paymentDate) {
       setPaymentDateError("Campo obrigatório");
       valid = false;
+    } else if (!/^\d{2}\/\d{2}\/\d{4}$/.test(paymentDate)) {
+      setPaymentDateError("Insira a data no formato dd/mm/aaaa");
+      valid = false;
     }
     if (!amountPaid) {
       setAmountPaidError("Campo obrigatório");
+      valid = false;
+    } else if (!/^\d+(\.\d{1,2})?$/.test(amountPaid)) {
+      setAmountPaidError("Insira um valor numérico válido.");
       valid = false;
     }
     if (!paymentType) {
@@ -74,22 +98,22 @@ function PaymentConfirmation() {
   }, [payerName, paymentDate, amountPaid, paymentType]);
 
   const handleSubmit = useCallback(async () => {
+    const paymentData = {
+      paid: true,
+      paidBy: payerName,
+      amount: parseFloat(amountPaid),
+      paymentType: paymentType,
+      paymentDate: paymentDate,
+    };
+
     if (!validateFields()) {
       Alert.alert("Erro", "Preencha todos os campos corretamente!");
       return;
     }
-
-    const paymentData = {
-      paid: true,
-      paidBy: payerName,
-      paymentType,
-      amount: parseFloat(amountPaid),
-      date: paymentDate,
-    };
-
     try {
       await addPaymentForMonth(studentId, year, monthNumber, paymentData);
       Alert.alert("Sucesso", "Pagamento adicionado com sucesso.");
+      router.push(`student/visualization/${studentId}/payment`);
     } catch (error) {
       console.log({ error });
       Alert.alert("Erro", "Não foi possível adicionar o pagamento.");

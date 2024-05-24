@@ -136,7 +136,7 @@ function EditStudent() {
         );
       }
       showSuccessPopup();
-      router.back();
+      router.push(`student/visualization/${studentId}`);
     } catch (error) {
       error.inner.forEach((err) => {
         switch (err.path) {

@@ -91,9 +91,6 @@ function Payment() {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <View style={{ alignItems: "center" }}>
-          <Icon />
-        </View>
         <View style={styles.containerRol}>
           <TouchableOpacity onPress={() => handleYearChange(year - 1)}>
             <Image source={ArrowLeft} />
@@ -106,19 +103,21 @@ function Payment() {
           </TouchableOpacity>
         </View>
 
-        {loading ? (
-          <View style={styles.container}>
-            <Text style={styles.text}>Carregando...</Text>
-            <ActivityIndicator size="large" color="#0000ff" />
-          </View>
-        ) : (
-          <FlatList
-            style={styles.monthList}
-            data={months}
-            renderItem={renderMonths}
-            keyExtractor={(item) => item.name}
-          />
-        )}
+        <View style={styles.container}>
+          {loading ? (
+            <View>
+              <Text style={styles.text}>Carregando...</Text>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          ) : (
+            <FlatList
+              style={styles.monthList}
+              data={months}
+              renderItem={renderMonths}
+              keyExtractor={(item) => item.name}
+            />
+          )}
+        </View>
       </View>
     </SafeAreaView>
   );

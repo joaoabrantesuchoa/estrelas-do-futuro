@@ -41,7 +41,11 @@ function StudentList() {
   }, [studentsData, searchText]);
 
   useEffect(() => {
-    fetchStudentsData();
+    const fetchData = async () => {
+      await fetchStudentsData();
+    };
+
+    fetchData();
   }, [fetchStudentsData]);
 
   const renderItem = ({ item }) => {

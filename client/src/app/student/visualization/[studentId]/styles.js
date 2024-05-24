@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     marginRight: 10,
   },
   buttonText: {
-    color: "#000",
+    color: "#FF0000",
     fontSize: 20,
     fontStyle: "normal",
     fontWeight: "700",
