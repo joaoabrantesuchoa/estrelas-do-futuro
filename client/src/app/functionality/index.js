@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, ImageBackground, SafeAreaView } from "react-native";
 import { styles } from "./styles";
 import { textStyles } from "../../../styles/fonts";
-import homePageBrassImage from "/home/joao/Projects/estrelas-do-futuro/client/assets/images/homePageBrasao.png";
+import homePageBrassImage from "../../../assets/images/homePageBrasao.png"
 import NavigationButton from "../../../components/buttons/navigationButton";
 
 export default function Functionality() {
