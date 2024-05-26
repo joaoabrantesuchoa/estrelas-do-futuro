@@ -1,5 +1,4 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import Icon from "../../../../../../components/icon";
 import TextBox from "../../../../../../components/textBox";
 import { View, Alert, TouchableOpacity, Text } from "react-native";
 import { useState, useCallback, useEffect } from "react";
@@ -131,7 +130,6 @@ function PaymentConfirmation() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <Icon />
         <TextBox
           name="Nome do pagador"
           onChangeText={handleInputChange(setPayerName, setPayerNameError)}

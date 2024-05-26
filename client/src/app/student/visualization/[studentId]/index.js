@@ -1,5 +1,10 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { deletedStudentById, getStudentById } from "../../../../../api";
+import {
+  deletedStudentById,
+  getStudentById,
+  setStudentPhoto,
+  getStudentPhoto,
+} from "../../../../../api";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Text, Image, View, TouchableOpacity } from "react-native";
 import { useEffect, useState, useCallback } from "react";
@@ -21,7 +26,14 @@ function StudentPage() {
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [studentId, setStudentData]);
+
+  const fetchPhoto = useCallback(async () => {
+    const studentPhoto = await getStudentPhoto(studentId);
+    if (studentPhoto) {
+      setProfileImage(`data:image/jpeg;base64,${studentPhoto}`);
+    }
+  }, [studentId, setProfileImage]);
 
   const deleteStudent = useCallback(async () => {
     Alert.alert(
@@ -63,7 +75,8 @@ function StudentPage() {
 
       if (!response.canceled) {
         try {
-          setProfileImage(response.uri);
+          await setStudentPhoto(studentId, response.assets[0].uri);
+          setProfileImage(response.assets[0].uri);
         } catch (error) {
           console.log(error.message);
         }
@@ -74,6 +87,10 @@ function StudentPage() {
   useEffect(() => {
     fetchStudentsData();
   }, [fetchStudentsData]);
+
+  useEffect(() => {
+    fetchPhoto();
+  }, [fetchPhoto]);
 
   return (
     <SafeAreaView style={styles.container}>

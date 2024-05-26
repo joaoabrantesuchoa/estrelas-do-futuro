@@ -112,3 +112,85 @@ export async function addPaymentForMonth(studentId, year, month, paymentData) {
     );
   }
 }
+
+export async function setStudentPhoto(studentId, photoUri) {
+  try {
+    let url = `${process.env.EXPO_PUBLIC_API_URL}/students/photo/${studentId}`;
+
+    const formData = new FormData();
+
+    formData.append("photo", {
+      uri: photoUri,
+      type: "image/jpeg",
+      name: `photo-${studentId}.jpg`,
+    });
+
+    const response = await axios.put(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Erro ao setar a foto para o estudante com ID ${studentId}`,
+      error
+    );
+  }
+}
+
+export async function getStudentPhoto(studentId) {
+  try {
+    let url = `${process.env.EXPO_PUBLIC_API_URL}/students/photo/${studentId}`;
+    const response = await axios.get(url);
+    return response.data.photo;
+  } catch (error) {
+    console.error(
+      `Erro ao buscar foto do estudante com ID ${studentId}`,
+      error
+    );
+  }
+}
+
+export async function setStudentEvaluation(studentId, evaluationUri) {
+  try {
+    let url = `${process.env.EXPO_PUBLIC_API_URL}/students/evaluation/${studentId}`;
+
+    const formData = new FormData();
+
+    formData.append("evaluation", {
+      uri: evaluationUri,
+      type: "image/jpeg",
+      name: `evaluation-${studentId}.jpg`,
+    });
+
+    const response = await axios.put(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      timeout: 5000,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(
+      `Erro ao setar a ficha de avaliação para o estudante com ID ${studentId}`,
+      error
+    );
+  }
+}
+
+export async function getStudentEvaluation(studentId) {
+  try {
+    let url = `${process.env.EXPO_PUBLIC_API_URL}/students/evaluation/${studentId}`;
+    const response = await axios.get(url);
+
+    return response.data.evaluation;
+  } catch (error) {
+    console.error(
+      `Erro ao buscar a ficha de avaliação para o estudante com ID ${studentId}`,
+      error
+    );
+  }
+}
