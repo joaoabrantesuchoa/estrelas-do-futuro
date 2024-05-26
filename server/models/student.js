@@ -52,6 +52,16 @@ const studentSchema = new mongoose.Schema({
   category: {
     type: Number,
   },
+
+  photo: {
+    type: Buffer,
+    default: Buffer.alloc(0),
+  },
+
+  evaluation: {
+    type: Buffer,
+    default: Buffer.alloc(0),
+  },
 });
 
 studentSchema.statics.determineCategory = function (age, birthYear) {

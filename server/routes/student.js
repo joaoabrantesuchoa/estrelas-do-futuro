@@ -93,8 +93,13 @@ router.get("/photo/:id", async (req, res) => {
     if (!student) {
       return res.status(404).send({ message: "Student not found" });
     }
-    const photo = Buffer.from(student.photo).toString("base64");
-    return res.status(200).send({ photo });
+
+    if (student.photo) {
+      const photo = Buffer.from(student.photo).toString("base64");
+      return res.status(200).send({ photo });
+    }
+
+    return res.status(200).send({ photo: "" });
   } catch (error) {
     console.error(error.message);
     res.status(500).send({ message: error.message });
@@ -116,6 +121,51 @@ router.put("/photo/:id", upload.single("photo"), async (req, res) => {
       req.params.id,
       {
         photo: photo,
+      },
+      { new: true }
+    );
+
+    return res.status(200).send(updatedStudent);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
+router.get("/evaluation/:id", async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    if (!student) {
+      return res.status(404).send({ message: "Student not found" });
+    }
+
+    if (student.evaluation) {
+      const evaluation = Buffer.from(student.evaluation).toString("base64");
+      return res.status(200).send({ evaluation });
+    }
+
+    return res.status(200).send({ evaluation: "" });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send({ message: error.message });
+  }
+});
+
+router.put("/evaluation/:id", upload.single("evaluation"), async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+
+    if (!student) {
+      return res.status(404).send({
+        message: "Student not found",
+      });
+    }
+    const evaluation = fs.readFileSync(req.file.path);
+
+    const updatedStudent = await Student.findByIdAndUpdate(
+      req.params.id,
+      {
+        evaluation: evaluation,
       },
       { new: true }
     );

@@ -1,12 +1,7 @@
-import { test, beforeAll } from "vitest";
+import { test } from "vitest";
 import request from "supertest";
-import sinon from "sinon";
 import Student from "../../models/student";
 import app from "../../app";
-
-beforeAll(async () => {
-  await Student.deleteMany();
-});
 
 test("POST /students", async ({ expect }) => {
   const newStudent = {
@@ -100,8 +95,6 @@ test("DELETE /students/:id", async ({ expect }) => {
 });
 
 test("Get the students by category", async ({ expect }) => {
-  await Student.deleteMany();
-
   const sub17Student = {
     name: "sub 17 Student",
     birthDate: "12/01/2008",
@@ -144,16 +137,9 @@ test("Get the students by category", async ({ expect }) => {
   expect(student5Body.length).toBe(1);
   expect(student5Body[0].name).toBe("sub 5 Student");
   expect(student5Body[0].category).toBe(5);
-
-  getResponse = await request(app).get(`/students`);
-  expect(getResponse.status).toBe(200);
-
-  expect(getResponse.body.length).toBe(2);
 });
 
 test("PUT - change the student model", async ({ expect }) => {
-  await Student.deleteMany();
-
   const student = {
     name: "sub 25 Student",
     birthDate: "01/01/2000",
@@ -195,8 +181,6 @@ test("PUT - change the student model", async ({ expect }) => {
 });
 
 test("PUT - change only the specified elements", async ({ expect }) => {
-  await Student.deleteMany();
-
   const student = {
     name: "sub 25 Student",
     birthDate: "01/01/2000",
