@@ -22,6 +22,7 @@
       "distribution": "internal",
       "developmentClient": false,
       "android": {
+        "image": "latest",
         "buildType": "apk",
         "gradleCommand": ":app:assembleRelease"
       },
